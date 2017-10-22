@@ -1,0 +1,82 @@
+[core]
+    editor = vim
+    excludesfile = ~/.gitignore
+    # Treat spaces before tabs and all kinds of trailing whitespace as an error
+    # [default] trailing-space: looks for spaces at the end of a line
+    # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
+    whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+[apply]
+    # Detect whitespace errors when applying a patch
+    whitespace = fix
+
+[merge]
+    # Include summaries of merged commits in newly created merge commit messages
+    log = true
+
+[help]
+    # Automatically correct and execute mistyped commands
+    autocorrect = 1
+
+[alias]
+    br = branch
+    branches = branch -a
+    ci = commit
+    co = checkout
+    comp = log --pretty=format:\"%Cred%h %Cgreen[by %an, %ar]%Creset %s\" --graph
+    dc = diff --cached
+    df = diff
+    lg = log --color --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    list = diff-tree --no-commit-id --name-only -r
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    lolbs = log --graph --decorate --pretty=oneline --abbrev-commit --no-merges master.. --stat
+    ls = ls-files
+    mybr = !git branch -a -v | grep `git config user.email|cut -f 2 -d .|cut -f 1 -d @`
+    pushdev = !git push --set-upstream origin "`git branch --no-color 2>/dev/null | grep '*' | sed -e 's/\\* //'`:dev/`git config user.email|cut -f 1 -d @`/`git branch --no-color 2>/dev/null | grep '*' | sed -e 's/\\* //'`"
+    pushtest = !git push --set-upstream origin "`git branch --no-color 2>/dev/null | grep '*' | sed -e 's/\\* //'`:testing/`git branch --no-color 2>/dev/null | grep '*' | sed -e 's/\\* //'`"
+    remotes = remote -v
+    st = status
+    # Show verbose output about tags, branches or remotes
+    tags = tag -l
+
+[color]
+    ui = true
+    branch = auto
+    diff = auto
+    interactive = auto
+    status = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold # line info
+    old = red bold # deletions
+    new = green bold # additions
+    whitespace = red reverse
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[push]
+    default = current
+
+[pull]
+    rebase = true
+
+[remote "origin"]
+    prune = true
+
+[credential]
+    helper = cache --timeout=3600
+
+[include]
+    # This is where you store your [user] specific config or other parameters if
+    # you want to overwrite the default one
+    path = ~/.gitconfig.local

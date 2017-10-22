@@ -1,0 +1,4 @@
+# OSX specific aliases
+alias brewup="brew update && brew upgrade && brew prune && brew cleanup && brew doctor"
+
+# vim: set ft=sh:

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+    echo "Invalid arguments count"
+    echo "usage: $0 <env_name>"
+    exit 1
+fi
+
+SESSIONS_TPL_DIR="${HOME}/.tmux/"
+SESSION_NAME="$1"
+
+SESSION_FILE="${SESSIONS_TPL_DIR}/${SESSION_NAME}-session.tmux"
+if ! [ -L "$SESSION_FILE" ] && ! [ -f "$SESSION_FILE" ]; then
+    echo "$SESSION_FILE not found"
+    exit 1
+fi
+tmux new-session -A -s "${SESSION_NAME}" "tmux source-file ${SESSION_FILE}"

@@ -1,0 +1,12 @@
+# OSX specific bashrc
+
+# let's install app using brew cask in user space
+export HOMEBREW_CASK_OPTS="--appdir=${HOME}/Applications"
+
+if [ -e "${HOME}/.iterm2_shell_integration.bash" ]; then
+    source "${HOME}/.iterm2_shell_integration.bash"
+fi
+
+source ~/.osx/bash_aliases
+
+# vim: set ft=sh:

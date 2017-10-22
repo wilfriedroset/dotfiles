@@ -1,0 +1,28 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- clean: ['~']
+
+- link:
+    ~/.bash_aliases:
+    ~/.bash_profile:
+    ~/.bashrc:
+    ~/.config/liquidpromptrc: liquidpromptrc
+    ~/.gitconfig:
+    ~/.liquidprompt:
+    ~/.local/bin/tmux-env: scripts/tmux-env
+    ~/.osx:
+    ~/.screenrc:
+    ~/.tmux:
+    ~/.tmux.conf:
+    ~/.vim/abbrev.vim: vim/abbrev.vim
+    ~/.vim/bundle/Vundle.vim: Vundle.vim
+    ~/.vimrc:
+    ~/.todo:
+    ~/.todo.actions.d:
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
+    - [vim +PluginInstall +qall, Installing vim plugin]

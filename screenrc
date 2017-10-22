@@ -1,0 +1,27 @@
+startup_message off
+
+chdir
+
+defutf8 on
+utf8 on on
+
+# Enable window monitoring & notifications
+monitor on
+defmonitor on
+
+# Sick of full-screen programs like vim remaining in the scrollback buffer
+# after you've closed them
+altscreen on
+
+# Use 256 colors
+term screen-256color
+
+autodetach on
+
+# Switch between tab with pgup and pgdown
+bindkey -t ^[[5;7~ prev
+bindkey -t ^[[6;7~ next
+
+hardstatus on
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d%{W}%{g}]'

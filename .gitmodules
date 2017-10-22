@@ -1,0 +1,15 @@
+[submodule "dotbot"]
+	path = dotbot
+	url = https://github.com/anishathalye/dotbot
+[submodule "liquidprompt"]
+	path = liquidprompt
+	url = https://github.com/nojhan/liquidprompt
+[submodule "Vundle.vim"]
+	path = Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim
+[submodule "todo.actions.d/graph"]
+	path = todo.actions.d/graph
+	url = https://github.com/timpulver/todo.txt-graph
+[submodule "todo.actions.d/chcon"]
+	path = todo.actions.d/chcon
+	url = https://github.com/kunkku/todo.txt-cli-chcon
