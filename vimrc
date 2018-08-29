@@ -239,6 +239,11 @@ let g:syntastic_go_checkers = ['golint']
 let g:syntastic_go_golint_quiet_messages = {
             \ "regex" : ['should have comment or be unexported'] }
 
+""""""""
+" yaml "
+""""""""
+let g:syntastic_yaml_checkers = ['yamllint']
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
