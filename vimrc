@@ -5,7 +5,7 @@
 "   -> UI/UX
 "   -> Moves
 "   -> Mapping
-"   -> Syntastic
+"   -> ALE
 "   -> Ultisnips
 "   -> Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -28,7 +28,7 @@ Plugin 'Vimjas/vim-python-pep8-indent' " A nicer Python indentation style for vi
 Plugin 'christoomey/vim-tmux-navigator' " move between Vim panes and tmux splits seamlessly.
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'scrooloose/syntastic'
+Plugin 'w0rp/ale'
 Plugin 'townk/vim-autoclose'
 Plugin 'tpope/vim-commentary'
 
@@ -117,7 +117,6 @@ set laststatus=2
 " same theme for airline
 let g:airline_theme='papercolor'
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 " Make it obvious where 80 characters is
@@ -189,60 +188,30 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Syntastic
+" => ALE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:syntastic_aggregate_errors = 1 " aggregates errors found by all checkers and displays them.
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_echo_current_error=1
-let g:syntastic_loc_list_height = 3 " option to specify the height of the location lists
-
-"""""""""""
-" sh/bash "
-"""""""""""
-let g:syntastic_sh_shellcheck_quiet_messages = {
-            \ "regex" : ['SC1090'] }
-
-""""""""""
-" python "
-""""""""""
-let g:syntastic_python_checkers = ['flake8']
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_info_str = 'I'
+let g:ale_echo_msg_format = '[%linter%] [%severity%] %s'
+let g:ale_open_list = 1
+let b:ale_linters_ignore = ['pylint']
+let g:ale_linters = {
+            \'python': ['flake8'],
+            \'golang': ['goimports'],
+            \}
 
 " Disable python lint error
-" C0103: invalid-name
-" C0111: missing-docstring
-" C0301: Line too long
-" C0302: Too many lines in module
-" C0412: ungrouped-imports
 " E501: line too long
-let g:syntastic_python_flake8_quiet_messages = {
-            \ "regex": ['C0111', 'C0301', 'C0302', 'C0411', 'E501', 'R\\d\\d\\d\\d']}
-
-""""""""
-" Perl "
-""""""""
-let g:syntastic_perl_checkers = ['perl']
-
-""""""""""
-" puppet "
-""""""""""
-let g:syntastic_puppet_puppetlint_quiet_messages = {
-            \ "regex" : ['autoloader_layout', 'documentation'] }
-
-""""""""""
-" golang "
-""""""""""
-let g:syntastic_go_checkers = ['golint']
-let g:syntastic_go_golint_quiet_messages = {
-            \ "regex" : ['should have comment or be unexported'] }
-
-""""""""
-" yaml "
-""""""""
-let g:syntastic_yaml_checkers = ['yamllint']
+let g:ale_python_flake8_options = '--ignore=E501'
+" close the loclist window automatically when the buffer is closed
+augroup CloseLoclistWindowGroup
+  autocmd!
+  autocmd QuitPre * if empty(&buftype) | lclose | endif
+augroup END
+let g:ale_list_window_size = 5 " Show 5 lines of errors (default: 10)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
