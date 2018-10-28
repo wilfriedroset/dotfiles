@@ -1,4 +1,5 @@
 # OSX specific aliases
 alias brewup="brew update && brew upgrade && brew prune && brew cleanup && brew doctor"
+alias brewrelink='brew list -1 | while read line; do brew unlink $line; brew link $line; done'
 
 # vim: set ft=sh:
