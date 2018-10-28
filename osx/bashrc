@@ -14,6 +14,8 @@ if [ -e "${HOME}/.iterm2_shell_integration.bash" ]; then
     source "${HOME}/.iterm2_shell_integration.bash"
 fi
 
-source ~/.osx/bash_aliases
+if [ -f "${HOME}/.osx/bash_aliases" ]; then
+    source "${HOME}/.osx/bash_aliases"
+fi
 
 # vim: set ft=sh:

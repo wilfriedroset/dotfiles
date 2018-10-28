@@ -36,9 +36,7 @@ if ! shopt -oq posix; then
 fi
 
 export EDITOR=vim
-
-PATH="${HOME}/.local/bin:${PATH}"
-export PATH
+export PATH="${HOME}/.local/bin:${PATH}"
 
 # Setup SSH agent
 setup_ssh_agent(){
@@ -55,18 +53,20 @@ setup_ssh_agent(){
 export -f setup_ssh_agent
 
 # OSX specific bashrc
-if [[ "$OSTYPE" == "darwin"* ]] && [[ -f ~/.osx/bashrc ]]; then
-    source ~/.osx/bashrc
+if [[ "$OSTYPE" == "darwin"* ]] && [[ -f "${HOME}/.osx/bashrc" ]]; then
+    source "${HOME}/.osx/bashrc"
 fi
 
-if [ -f ~/.bashrc.local ]; then
-    source ~/.bashrc.local
+if [ -f "${HOME}/.bashrc.local" ]; then
+    source "${HOME}/.bashrc.local"
 fi
 
-if [ -f ~/.bash_aliases ]; then source ~/.bash_aliases; fi
+if [ -f "${HOME}/.bash_aliases" ]; then
+    source "${HOME}/.bash_aliases"
+fi
 
 # Let's have a useful prompt
-source ~/.liquidprompt/liquidprompt
+source "${HOME}/.liquidprompt/liquidprompt"
 
 # Call last to allow CTRL-C
 setup_ssh_agent

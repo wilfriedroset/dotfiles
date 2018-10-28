@@ -14,8 +14,8 @@ alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
 
-if [ -f ~/.bash_aliases.local ]; then
-    source ~/.bash_aliases.local
+if [ -f "${HOME}/.bash_aliases.local" ]; then
+    source "${HOME}/.bash_aliases.local"
 fi
 
 # vim: set ft=sh:
