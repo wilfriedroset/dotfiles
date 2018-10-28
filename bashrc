@@ -50,9 +50,9 @@ export PATH
 # Setup SSH agent
 setup_ssh_agent(){
     if [ -n "${SSH_AUTH_SOCK+x}" ]; then
-        ssh-add -L > /dev/null
+        ssh-add -L > /dev/null # don't care about the output
+        # shellcheck disable=SC2181
         if [ $? -ne 0 ]; then
-            echo "please setup ssh-agent"
             ssh-add -q -t 36000
         fi
     fi
