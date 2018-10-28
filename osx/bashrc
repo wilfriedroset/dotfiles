@@ -1,4 +1,7 @@
 # OSX specific bashrc
+# shellcheck source=/dev/null
+# SC1090 is not able to follow sourced files and I don't care in bashrc case
+
 
 # let's install app using brew cask in user space
 export HOMEBREW_CASK_OPTS="--appdir=${HOME}/Applications"

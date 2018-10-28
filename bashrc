@@ -1,3 +1,6 @@
+# shellcheck source=/dev/null
+# SC1090 is not able to follow sourced files and I don't care in bashrc case
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
