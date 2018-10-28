@@ -119,6 +119,8 @@ let g:airline_theme='papercolor'
 set statusline+=%#warningmsg#
 set statusline+=%*
 
+" Stop auto wrap
+set formatoptions-=t
 " Make it obvious where 80 characters is
 set textwidth=80
 set colorcolumn=+1
