@@ -5,7 +5,6 @@
 "   -> UI/UX
 "   -> Moves
 "   -> Mapping
-"   -> Ultisnips
 "   -> ALE
 "   -> Languages Specific
 "   -> Spell checking
@@ -33,10 +32,6 @@ Plugin 'w0rp/ale'
 Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plugin 'townk/vim-autoclose'
 Plugin 'tpope/vim-commentary'
-
-" Snippets and better completion
-Plugin 'SirVer/ultisnips' " Track the engine.
-Plugin 'honza/vim-snippets' " Snippets are separated from the engine.
 
 " Theme
 Plugin 'nlknguyen/papercolor-theme'
@@ -178,18 +173,6 @@ cmap jk <C-c>
 imap kj <C-c>
 vmap kj <C-c>
 cmap kj <C-c>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Ultisnips
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => ALE
