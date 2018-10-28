@@ -35,10 +35,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if [ -f ~/.bash_aliases ]; then
-    source ~/.bash_aliases
-fi
-
 export EDITOR=vim
 
 PATH="${HOME}/.local/bin:${PATH}"
@@ -66,6 +62,8 @@ fi
 if [ -f ~/.bashrc.local ]; then
     source ~/.bashrc.local
 fi
+
+if [ -f ~/.bash_aliases ]; then source ~/.bash_aliases; fi
 
 # Let's have a useful prompt
 source ~/.liquidprompt/liquidprompt
