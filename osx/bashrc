@@ -9,6 +9,8 @@ export LSCOLORS=ExFxBxDxCxegedabagacad
 
 # let's install app using brew cask in user space
 export HOMEBREW_CASK_OPTS="--appdir=${HOME}/Applications"
+# will not auto-update before running `brew install`, `brew upgrade` or `brew tap`.
+export HOMEBREW_NO_AUTO_UPDATE=1
 
 if [ -e "${HOME}/.iterm2_shell_integration.bash" ]; then
     source "${HOME}/.iterm2_shell_integration.bash"
