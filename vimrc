@@ -5,8 +5,9 @@
 "   -> UI/UX
 "   -> Moves
 "   -> Mapping
-"   -> ALE
 "   -> Ultisnips
+"   -> ALE
+"   -> Languages Specific
 "   -> Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -29,6 +30,7 @@ Plugin 'christoomey/vim-tmux-navigator' " move between Vim panes and tmux splits
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'w0rp/ale'
+Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plugin 'townk/vim-autoclose'
 Plugin 'tpope/vim-commentary'
 
@@ -214,6 +216,11 @@ augroup CloseLoclistWindowGroup
   autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
 let g:ale_list_window_size = 5 " Show 5 lines of errors (default: 10)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => GOLANG
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:go_fmt_command = "goimports"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
