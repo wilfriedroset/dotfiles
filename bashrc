@@ -35,9 +35,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Let's have a useful prompt
-source ~/.liquidprompt/liquidprompt
-
 if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
 fi
@@ -69,6 +66,9 @@ fi
 if [ -f ~/.bashrc.local ]; then
     source ~/.bashrc.local
 fi
+
+# Let's have a useful prompt
+source ~/.liquidprompt/liquidprompt
 
 # Call last to allow CTRL-C
 setup_ssh_agent
