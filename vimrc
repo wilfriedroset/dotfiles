@@ -193,6 +193,7 @@ let g:ale_linters = {
 " Disable python lint error
 " E501: line too long
 let g:ale_python_flake8_options = '--ignore=E501'
+let g:ale_yaml_yamllint_options = '-d "{extends: default, rules: {document-start: disable, line-length: {max: 300}}}"'
 " close the loclist window automatically when the buffer is closed
 augroup CloseLoclistWindowGroup
   autocmd!
