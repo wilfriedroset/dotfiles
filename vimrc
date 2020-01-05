@@ -205,6 +205,8 @@ let g:ale_list_window_size = 5 " Show 5 lines of errors (default: 10)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => GOLANG
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Disable version warning for now as I'm running 8.0.1365
+let g:go_version_warning = 0
 let g:go_fmt_command = "goimports"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
