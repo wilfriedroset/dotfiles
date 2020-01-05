@@ -74,6 +74,10 @@ set wildmenu " Display all matching files when we tab complete
 " enable highlighting and stripping whitespace on save by default
 let g:better_whitespace_enabled=1
 let g:strip_whitespace_on_save=1
+" will not be asked for confirmation before whitespace is stripped when you save the file
+let g:strip_whitespace_confirm=0
+" only the modified lines will have their trailing whitespace stripped when you save the file
+let g:strip_only_modified_lines=1
 
 " let vim commentary use # to comment in cfg file
 autocmd FileType cfg setlocal commentstring=#\ %s
