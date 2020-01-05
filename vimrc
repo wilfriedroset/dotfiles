@@ -32,6 +32,7 @@ Plugin 'w0rp/ale'
 Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plugin 'townk/vim-autoclose'
 Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-abolish'
 
 " Theme
 Plugin 'nlknguyen/papercolor-theme'
@@ -209,9 +210,6 @@ let g:go_fmt_command = "goimports"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" For abbreviations read in the following file:
-source ~/.vim/abbrev.vim
 
 " Enable spellcheck for markdown and restructuredtext (both english and french)
 setlocal spelllang=en,fr

@@ -17,7 +17,7 @@
     ~/.screenrc:
     ~/.tmux:
     ~/.tmux.conf:
-    ~/.vim/abbrev.vim: vim/abbrev.vim
+    ~/.vim/after/plugin/abolish.vim: vim/after/plugin/abolish.vim
     ~/.vim/bundle/Vundle.vim: Vundle.vim
     ~/.vimrc:
     ~/.todo:
