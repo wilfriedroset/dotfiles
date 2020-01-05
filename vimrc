@@ -92,7 +92,7 @@ autocmd BufLeave * set number
 autocmd BufNewFile,BufRead *.eyaml setfiletype yaml
 
 " set indentation to 2 space for yaml
-autocmd FileType yaml,ruby setlocal ts=2 sts=2 sw=2
+autocmd FileType markdown,yaml,ruby setlocal ts=2 sts=2 sw=2
 
 "golang use tab
 autocmd FileType go set noexpandtab
