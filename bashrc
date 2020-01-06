@@ -70,3 +70,5 @@ source "${HOME}/.liquidprompt/liquidprompt"
 
 # Call last to allow CTRL-C
 setup_ssh_agent
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
