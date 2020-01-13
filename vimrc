@@ -31,7 +31,6 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'w0rp/ale'
 Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-Plugin 'townk/vim-autoclose'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-abolish'
 
