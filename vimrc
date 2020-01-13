@@ -88,11 +88,11 @@ autocmd BufEnter * set relativenumber
 " set back to normal numbering when leaving buffer
 autocmd BufLeave * set number
 
+" yaml specific configuration
 " eyaml recognize as yaml
 autocmd BufNewFile,BufRead *.eyaml setfiletype yaml
+autocmd FileType markdown,yaml,ruby setlocal ts=2 sts=2 sw=2 tw=0
 
-" set indentation to 2 space for yaml
-autocmd FileType markdown,yaml,ruby setlocal ts=2 sts=2 sw=2
 
 "golang use tab
 autocmd FileType go set noexpandtab
