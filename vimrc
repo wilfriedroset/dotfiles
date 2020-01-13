@@ -93,8 +93,7 @@ autocmd BufLeave * set number
 autocmd BufNewFile,BufRead *.eyaml setfiletype yaml
 autocmd FileType markdown,yaml,ruby setlocal ts=2 sts=2 sw=2 tw=0
 
-
-"golang use tab
+" golang specific configuration
 autocmd FileType go set noexpandtab
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
