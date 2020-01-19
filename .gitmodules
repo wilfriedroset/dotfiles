@@ -14,3 +14,6 @@
 [submodule "todo.actions.d/chcon"]
 	path = todo.actions.d/chcon
 	url = https://github.com/kunkku/todo.txt-cli-chcon
+[submodule "tmux/plugins/tpm"]
+	path = tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
