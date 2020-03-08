@@ -24,6 +24,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim' " let Vundle manage Vundle, required
 
 " Tools
+Plugin 'tpope/vim-sensible'
 Plugin 'ConradIrwin/vim-bracketed-paste' " paste enables transparent pasting into vim
 Plugin 'Vimjas/vim-python-pep8-indent' " A nicer Python indentation style for vim.
 Plugin 'christoomey/vim-tmux-navigator' " move between Vim panes and tmux splits seamlessly.
