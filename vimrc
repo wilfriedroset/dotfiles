@@ -171,14 +171,6 @@ vnoremap > >gv
 vmap Q gq
 nmap Q gqap
 
-" use quick jk or kj as esc
-imap jk <C-c>
-vmap jk <C-c>
-cmap jk <C-c>
-imap kj <C-c>
-vmap kj <C-c>
-cmap kj <C-c>
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => ALE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
