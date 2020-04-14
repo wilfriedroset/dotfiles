@@ -39,6 +39,7 @@ Plugin 'tpope/vim-abolish'
 Plugin 'nlknguyen/papercolor-theme'
 Plugin 'rodjek/vim-puppet'
 Plugin 'shmup/vim-sql-syntax'
+Plugin 'glench/vim-jinja2-syntax'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
