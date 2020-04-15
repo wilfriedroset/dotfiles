@@ -8,10 +8,10 @@
 - link:
     ~/.bash_aliases:
     ~/.bash_profile:
+    ~/.bash-git-prompt:
     ~/.bashrc:
-    ~/.config/liquidpromptrc: liquidpromptrc
+    ~/.git-prompt-colors.sh:
     ~/.gitconfig:
-    ~/.liquidprompt:
     ~/.local/bin/tmux-env: scripts/tmux-env
     ~/.osx:
     ~/.screenrc:

@@ -63,10 +63,14 @@ fi
 
 if [ -f "${HOME}/.bash_aliases" ]; then
     source "${HOME}/.bash_aliases"
+# Let's have a useful prompt
+if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
+    export PROMPT_DIRTRIM=3  # works starting bash v4.0
+    GIT_PROMPT_ONLY_IN_REPO=0
+    GIT_PROMPT_THEME=Custom
+    source "${HOME}/.bash-git-prompt/gitprompt.sh"
 fi
 
-# Let's have a useful prompt
-source "${HOME}/.liquidprompt/liquidprompt"
 
 # Call last to allow CTRL-C
 setup_ssh_agent
