@@ -30,9 +30,7 @@ if ! shopt -oq posix; then
     # shellcheck disable=SC1091
     source /etc/bash_completion
   fi
-  if [ -f "${HOME}/.local/etc/bash_completion" ]; then
-      source "${HOME}/.local/etc/bash_completion"
-  fi
+  [ -f "${HOME}/.local/etc/bash_completion" ] && source "${HOME}/.local/etc/bash_completion"
 fi
 
 export EDITOR=vim
@@ -57,12 +55,8 @@ if [[ "$OSTYPE" == "darwin"* ]] && [[ -f "${HOME}/.osx/bashrc" ]]; then
     source "${HOME}/.osx/bashrc"
 fi
 
-if [ -f "${HOME}/.bashrc.local" ]; then
-    source "${HOME}/.bashrc.local"
-fi
+[ -f "${HOME}/.bash_aliases" ] && source "${HOME}/.bash_aliases"
 
-if [ -f "${HOME}/.bash_aliases" ]; then
-    source "${HOME}/.bash_aliases"
 # Let's have a useful prompt
 if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
     export PROMPT_DIRTRIM=3  # works starting bash v4.0
@@ -71,8 +65,9 @@ if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
     source "${HOME}/.bash-git-prompt/gitprompt.sh"
 fi
 
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+[ -f "${HOME}/.bashrc.local" ] && source "${HOME}/.bashrc.local"
 
 # Call last to allow CTRL-C
 setup_ssh_agent
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
