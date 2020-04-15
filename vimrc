@@ -138,11 +138,6 @@ let g:tmux_navigator_disable_when_zoomed = 1
 " => Move
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Disable arrow
-nnoremap <Left> :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up> :echoe "Use k"<CR>
-nnoremap <Down> :echoe "Use j"<CR>
 
 " Quicker window movement
 nnoremap <C-j> <C-w>j
