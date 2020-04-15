@@ -57,11 +57,8 @@ let mapleader = " "
 " Always use vertical diffs
 set diffopt+=vertical
 
-set autoindent
-set autoread " Reload files changed outside vim
-set backspace=eol,start,indent
 set expandtab " In Insert mode: Use the appropriate number of spaces to insert a <Tab>
-set hlsearch incsearch " highlight search
+set hlsearch " highlight search
 set ignorecase smartcase " Make search case insensitive, Override if the search pattern contains uppercase characters
 set nobackup nowritebackup noswapfile " Disable stupid backup and swap files
 set number relativenumber " precede each line with its relative line number.
@@ -71,7 +68,6 @@ set shiftround " Round indent to multiple of 'shiftwidth'
 set splitbelow splitright " Open new split panes to right and bottom, which feels more natural
 set tabstop=4 shiftwidth=4
 set wildignore=*.pyc
-set wildmenu " Display all matching files when we tab complete
 
 " enable highlighting and stripping whitespace on save by default
 let g:better_whitespace_enabled=1
@@ -115,8 +111,6 @@ catch /^Vim\%((\a\+)\)\=:E185/
     colorscheme default
 endtry
 
-" Status line a.k.a airline
-set laststatus=2
 " same theme for airline
 let g:airline_theme='papercolor'
 set statusline+=%#warningmsg#
