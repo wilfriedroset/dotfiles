@@ -18,6 +18,7 @@ Plugin 'christoomey/vim-tmux-navigator' " move between Vim panes and tmux splits
 Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'preservim/nerdtree'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-sensible'
@@ -190,4 +191,7 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=lightgrey ctermbg=grey
 " ===  christoomey/vim-tmux-navigator ===
 let g:tmux_navigator_disable_when_zoomed = 1 " Disable tmux navigator when zooming the Vim pane
 
+" ===   preservim/nerdtree          ===
+map <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
