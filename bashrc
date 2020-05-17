@@ -42,7 +42,8 @@ setup_ssh_agent(){
         ssh-add -L > /dev/null # don't care about the output
         # shellcheck disable=SC2181
         if [ $? -ne 0 ]; then
-            ssh-add -q -t 36000
+            # ssh-add -q -t 36000  # standalone ssh-key
+            ssh-add -s /usr/local/lib/opensc-pkcs11.so  # yubikey
         fi
     fi
 }
