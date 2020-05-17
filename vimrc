@@ -15,6 +15,7 @@ Plugin 'gmarik/Vundle.vim' " let Vundle manage Vundle, required
 Plugin 'ConradIrwin/vim-bracketed-paste' " paste enables transparent pasting into vim
 Plugin 'Vimjas/vim-python-pep8-indent' " A nicer Python indentation style for vim.
 Plugin 'christoomey/vim-tmux-navigator' " move between Vim panes and tmux splits seamlessly.
+Plugin 'dense-analysis/ale'
 Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'ntpeters/vim-better-whitespace'
@@ -22,7 +23,6 @@ Plugin 'preservim/nerdtree'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-sensible'
-Plugin 'w0rp/ale'
 
 " Theme & Code display
 Plugin 'glench/vim-jinja2-syntax'
@@ -146,7 +146,7 @@ augroup end
 " ===    Plugins Configuration      ===
 " =====================================
 
-" ===         w0rp/ale              ===
+" ===     dense-analysis/ale        ===
 let b:ale_linters_ignore = ['pylint']
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_format = '[%linter%] [%severity%] %s'
