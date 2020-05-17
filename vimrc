@@ -31,6 +31,7 @@ Plugin 'rodjek/vim-puppet'
 Plugin 'shmup/vim-sql-syntax'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'hashivim/vim-terraform'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
