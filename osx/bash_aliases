@@ -1,6 +1,0 @@
-# OSX specific aliases
-alias brewup="brew update && brew upgrade && brew cleanup --prune 1 && brew doctor"
-alias brewrelink='brew list -1 | while read line; do brew unlink $line; brew link --force $line; done'
-alias brewlink_gnuutil='for gnuutil in "$(brew --prefix)"/opt/**/libexec/gnubin/*; do ln -fs "$gnuutil" "${HOME}"/.local/bin/; done'
-
-# vim: set ft=sh:

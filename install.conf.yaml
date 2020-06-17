@@ -6,22 +6,24 @@
 - clean: ['~']
 
 - link:
+    ~/.bash-git-prompt:
     ~/.bash_aliases:
     ~/.bash_profile:
-    ~/.bash-git-prompt:
     ~/.bashrc:
     ~/.git-prompt-colors.sh:
     ~/.gitconfig:
     ~/.local/bin/tmux-env: scripts/tmux-env
-    ~/.osx:
     ~/.screenrc:
-    ~/.tmux:
+    ~/.shell.aliases:
+    ~/.shell.env:
+    ~/.shell.rc:
     ~/.tmux.conf:
+    ~/.tmux:
+    ~/.todo.actions.d:
+    ~/.todo:
     ~/.vim/after/plugin/abolish.vim: vim/after/plugin/abolish.vim
     ~/.vim/bundle/Vundle.vim: Vundle.vim
     ~/.vimrc:
-    ~/.todo:
-    ~/.todo.actions.d:
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

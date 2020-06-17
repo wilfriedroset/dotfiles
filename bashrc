@@ -1,6 +1,9 @@
 # shellcheck source=/dev/null
 # SC1090 is not able to follow sourced files and I don't care in bashrc case
 
+# Call first cross shell configuration to allow override
+[ -f "${HOME}/.shell.rc" ] && source "${HOME}/.shell.rc"
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -33,31 +36,6 @@ if ! shopt -oq posix; then
   [ -f "${HOME}/.local/etc/bash_completion" ] && source "${HOME}/.local/etc/bash_completion"
 fi
 
-export EDITOR=vim
-export PATH="${HOME}/.local/bin:${PATH}"
-
-# Setup SSH agent
-setup_ssh_agent(){
-    if [ -n "${SSH_AUTH_SOCK+x}" ]; then
-        ssh-add -L > /dev/null # don't care about the output
-        # shellcheck disable=SC2181
-        if [ $? -ne 0 ]; then
-            # ssh-add -q -t 36000  # standalone ssh-key
-            ssh-add -s /usr/local/lib/opensc-pkcs11.so  # yubikey
-        fi
-    fi
-}
-
-# export the function to be usable in shell as a command
-export -f setup_ssh_agent
-
-# OSX specific bashrc
-if [[ "$OSTYPE" == "darwin"* ]] && [[ -f "${HOME}/.osx/bashrc" ]]; then
-    source "${HOME}/.osx/bashrc"
-fi
-
-[ -f "${HOME}/.bash_aliases" ] && source "${HOME}/.bash_aliases"
-
 # Let's have a useful prompt
 if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
     export PROMPT_DIRTRIM=3  # works starting bash v4.0
@@ -66,9 +44,5 @@ if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
     source "${HOME}/.bash-git-prompt/gitprompt.sh"
 fi
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
+[ -f "${HOME}/.bash_aliases" ] && source "${HOME}/.bash_aliases"
 [ -f "${HOME}/.bashrc.local" ] && source "${HOME}/.bashrc.local"
-
-# Call last to allow CTRL-C
-setup_ssh_agent

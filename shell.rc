@@ -1,0 +1,10 @@
+# This file is meant to be used by both bash and zsh in an attempt to make both
+# coexist as much as possible.
+
+shell_name=$(echo $SHELL| awk -F/ '{print$NF}')
+[ -f "${HOME}/.iterm2_shell_integration.${shell_name}" ] && source "${HOME}/.iterm2_shell_integration.${shell_name}"
+[ -f "${HOME}/.fzf.${shell_name}" ] && source "${HOME}/.fzf.${shell_name}"
+[ -f "${HOME}/.shell.env" ] && source "${HOME}/.shell.env"
+[ -f "${HOME}/.shell.aliases" ] && source "${HOME}/.shell.aliases"
+
+[ -f "${HOME}/.shell.rc.local" ] && source "${HOME}/.shell.rc.local"

@@ -1,0 +1,31 @@
+# This file is meant to be used by both bash and zsh in an attempt to make both
+# coexist as much as possible.
+
+alias c='clear'
+
+# Enable some colors if the option is available
+# don't care about the output, only to check if the option is available e.g: old version on osx
+ls --color=auto &> /dev/null
+if [ $? -eq 0 ]; then
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# some more ls aliases
+alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias yubikey_load_ssh="ssh-add -s /usr/local/lib/opensc-pkcs11.so"
+alias yubikey_unload_ssh="ssh-add -e /usr/local/lib/opensc-pkcs11.so"
+
+# OSX specific
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    alias brewup="brew update && brew upgrade && brew cleanup --prune 1 && brew doctor"
+    alias brewrelink='brew list -1 | while read line; do brew unlink $line; brew link --force $line; done'
+    alias brewlink_gnuutil='for gnuutil in "$(brew --prefix)"/opt/**/libexec/gnubin/*; do ln -fs "$gnuutil" "${HOME}"/.local/bin/; done'
+fi
+
+[ -f "${HOME}/.shell.aliases.local" ] && source "${HOME}/.shell.aliases.local"
