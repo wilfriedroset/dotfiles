@@ -23,9 +23,12 @@ Plugin 'preservim/nerdtree'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-fugitive'
+Bundle 'edkolev/tmuxline.vim'
 
 " Theme & Code display
 Plugin 'glench/vim-jinja2-syntax'
+Plugin 'kaicataldo/material.vim'
 Plugin 'nlknguyen/papercolor-theme'
 Plugin 'rodjek/vim-puppet'
 Plugin 'shmup/vim-sql-syntax'
@@ -88,15 +91,25 @@ set cursorline
 " Just in case the colorscheme is not available switch back to default
 " gracefully
 try
-    colorscheme PaperColor
+    colorscheme material
 catch /^Vim\%((\a\+)\)\=:E185/
     colorscheme default
 endtry
 
 " same theme for airline
-let g:airline_theme='papercolor'
+let g:airline_powerline_fonts = 1
+let g:airline_theme='material'
 set statusline+=%#warningmsg#
 set statusline+=%*
+
+" TmuxlineSnapshot! ~/.tmux/themes/same-as-vim.tmux
+let g:tmuxline_preset = {
+      \'a'    : '#{session_name}',
+      \'win'  : ['#I', '#W'],
+      \'cwin' : ['#I#F', '#W'],
+      \'options': {
+        \'status-justify': 'left',}
+        \}
 
 " Stop auto wrap
 set formatoptions-=t
