@@ -6,6 +6,7 @@
 - clean: ['~']
 
 - link:
+    ~/.antigen/antigen.zsh: antigen/antigen.zsh
     ~/.bash-git-prompt:
     ~/.bash_aliases:
     ~/.bash_profile:
@@ -24,6 +25,7 @@
     ~/.vim/after/plugin/abolish.vim: vim/after/plugin/abolish.vim
     ~/.vim/bundle/Vundle.vim: Vundle.vim
     ~/.vimrc:
+    ~/.zshrc:
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
