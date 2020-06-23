@@ -11,6 +11,7 @@
     ~/.bash_aliases:
     ~/.bash_profile:
     ~/.bashrc:
+    ~/.config/bat/config: bat.conf
     ~/.git-prompt-colors.sh:
     ~/.gitconfig:
     ~/.local/bin/tmux-env: scripts/tmux-env
