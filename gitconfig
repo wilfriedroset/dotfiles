@@ -80,3 +80,5 @@
     # This is where you store your [user] specific config or other parameters if
     # you want to overwrite the default one
     path = ~/.gitconfig.local
+[gpg]
+	program = gpg2
