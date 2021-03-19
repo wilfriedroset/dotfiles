@@ -17,6 +17,7 @@ antigen bundles <<EOBUNDLES
     docker-compose
     git
     zsh-syntax-highlighting
+    kubectl
 
     # Syntax highlighting bundle.
     zsh-users/zsh-syntax-highlighting
