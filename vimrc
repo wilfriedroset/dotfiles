@@ -24,6 +24,7 @@ Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-fugitive'
+Plugin 'godlygeek/tabular'
 Bundle 'edkolev/tmuxline.vim'
 
 " Theme & Code display
