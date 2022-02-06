@@ -9,7 +9,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=~/.local/opt/fzf
 call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim' " let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
 
 " Tools
 Plugin 'ConradIrwin/vim-bracketed-paste' " paste enables transparent pasting into vim
