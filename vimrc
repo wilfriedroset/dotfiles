@@ -219,3 +219,5 @@ let g:tmux_navigator_disable_when_zoomed = 1 " Disable tmux navigator when zoomi
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" ===   hashivim/vim-terraform      ===
+autocmd BufRead,BufNewFile *.hcl set filetype=terraform
