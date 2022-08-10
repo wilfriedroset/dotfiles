@@ -27,6 +27,7 @@
     ~/.vim/bundle/Vundle.vim: Vundle.vim
     ~/.vimrc:
     ~/.zshrc:
+    ~/.vale.ini:
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
