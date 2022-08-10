@@ -29,13 +29,13 @@ Bundle 'edkolev/tmuxline.vim'
 
 " Theme & Code display
 Plugin 'glench/vim-jinja2-syntax'
-Plugin 'kaicataldo/material.vim'
-Plugin 'nlknguyen/papercolor-theme'
+Plugin 'joshdick/onedark.vim'
 Plugin 'rodjek/vim-puppet'
 Plugin 'shmup/vim-sql-syntax'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'hashivim/vim-terraform'
+Plugin 'google/vim-jsonnet'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -94,14 +94,14 @@ set cursorline
 " Just in case the colorscheme is not available switch back to default
 " gracefully
 try
-    colorscheme material
+    colorscheme onedark
 catch /^Vim\%((\a\+)\)\=:E185/
     colorscheme default
 endtry
 
 " same theme for airline
 let g:airline_powerline_fonts = 1
-let g:airline_theme='material'
+let g:airline_theme='onedark'
 set statusline+=%#warningmsg#
 set statusline+=%*
 
