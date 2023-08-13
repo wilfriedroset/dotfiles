@@ -18,6 +18,7 @@ antigen bundles <<EOBUNDLES
     git
     zsh-syntax-highlighting
     kubectl
+    terraform
 
     # Syntax highlighting bundle.
     zsh-users/zsh-syntax-highlighting
