@@ -12,6 +12,7 @@
     ~/.bash_profile:
     ~/.bashrc:
     ~/.config/bat/config: bat.conf
+    ~/.config/nvim:
     ~/.git-prompt-colors.sh:
     ~/.gitconfig:
     ~/.local/bin/tmux-env: scripts/tmux-env
