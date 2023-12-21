@@ -1,4 +1,10 @@
 return {
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "catppuccin",
+    },
+  },
   { "ConradIrwin/vim-bracketed-paste" },
   {
     "aserowy/tmux.nvim",
@@ -10,28 +16,6 @@ return {
         },
       })
     end,
-  },
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {
-      filetype_exclude = {
-        "Trouble",
-        "alpha",
-        "dashboard",
-        "help",
-        "lazy",
-        "lazyterm",
-        "mason",
-        "neo-tree",
-        "notify",
-        "toggleterm",
-      },
-      char = "",
-      space_char_blankline = " ",
-      show_current_context = true,
-      show_current_context_start = true,
-    },
   },
   {
     "folke/trouble.nvim",
@@ -127,13 +111,10 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     opts = function()
-      return {
-        --[[add your custom lualine config here]]
-      }
+      return {}
     end,
   },
 
-  { "jose-elias-alvarez/null-ls.nvim" },
   { "williamboman/mason-lspconfig.nvim" },
   { "neovim/nvim-lspconfig" },
   { "mfussenegger/nvim-dap" },
@@ -160,14 +141,14 @@ return {
         "lua-language-server",
         "shellcheck",
         "shfmt",
-        "sonarlint-language-server",
+        -- "sonarlint-language-server",
         "staticcheck",
         "stylua",
         "terraform-ls",
         "tflint",
-        "yamlfix",
-        "yamlfmt",
-        "yamllint",
+        -- "yamlfix",
+        -- "yamlfmt",
+        -- "yamllint",
       },
     },
   },
@@ -195,30 +176,11 @@ return {
     build = ':lua require("go.install").update_all_sync()',
   },
   {
-    "huggingface/llm.nvim",
-    opts = {
-      debounce_ms = 150,
-      accept_keymap = "<Tab>",
-      dismiss_keymap = "<S-Tab>",
-      -- llm-lsp
-      tokenizer_path = vim.api.nvim_call_function("stdpath", { "data" }) .. "/llm/codellama-tokenizer.json", -- when setting model as a URL, set this var
-      lsp = {
-        enabled = true,
-        bin_path = vim.api.nvim_call_function("stdpath", { "data" }) .. "/mason/bin/llm-ls",
-      },
-      -- code-llama
-      model_eos = "<EOT>",
-      fim = {
-        enabled = true,
-        prefix = "<PRE> ",
-        middle = " <MID>",
-        suffix = " <SUF>",
-      },
-      context_window = 4096,
-    },
+    "m4xshen/smartcolumn.nvim",
   },
   {
-    "m4xshen/smartcolumn.nvim",
-    opts = {},
+    "cappyzawa/trim.nvim",
   },
+  { "echasnovski/mini.nvim", version = false },
+  { "rfratto/vim-river" },
 }
