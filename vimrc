@@ -200,10 +200,10 @@ let g:go_version_warning = 0
 let g:go_fmt_command = "goimports"
 
 " === ntpeters/vim-better-whitespace ===
-let g:better_whitespace_enabled=1 " enable highlighting and stripping whitespace on save by default
-let g:strip_only_modified_lines=1 " only the modified lines will have their trailing whitespace stripped when you save the file
-let g:strip_whitespace_confirm=0 " will not be asked for confirmation before whitespace is stripped when you save the file
-let g:strip_whitespace_on_save=1
+" let g:better_whitespace_enabled=1 " enable highlighting and stripping whitespace on save by default
+" let g:strip_only_modified_lines=1 " only the modified lines will have their trailing whitespace stripped when you save the file
+" let g:strip_whitespace_confirm=0 " will not be asked for confirmation before whitespace is stripped when you save the file
+" let g:strip_whitespace_on_save=1
 
 " === nathanaelkane/vim-indent-guides ===
 let g:indent_guides_auto_colors = 0 " Disable autocolor
