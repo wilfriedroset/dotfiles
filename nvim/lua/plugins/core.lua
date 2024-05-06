@@ -182,7 +182,9 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     config = function()
-      require("go").setup()
+      require("go").setup({
+        trouble = true, -- true: use trouble to open quickfix
+      })
     end,
     event = { "CmdlineEnter" },
     ft = { "go", "gomod" },
