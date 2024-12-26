@@ -3,10 +3,10 @@
       create: true
       relink: true
 
-- clean: ['~']
+- clean: ["~"]
 
 - link:
-    ~/.antigen/antigen.zsh: antigen/antigen.zsh
+    ~/.oh-my-zsh:
     ~/.bash-git-prompt:
     ~/.bash_aliases:
     ~/.bash_profile:
