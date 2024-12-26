@@ -8,3 +8,6 @@ nvim/.repro
 nvim/foo.*
 nvim/*.log
 nvim/data
+
+# this is managed by tpm
+tmux/plugins/tmux
