@@ -20,6 +20,7 @@ alias l='ls -CF'
 
 alias yubikey_load_ssh="ssh-add -s /usr/local/lib/opensc-pkcs11.so"
 alias yubikey_unload_ssh="ssh-add -e /usr/local/lib/opensc-pkcs11.so"
+alias yubikey_reload_ssh="yubikey_unload_ssh && yubikey_load_ssh"
 
 # OSX specific
 if [[ "$OSTYPE" == "darwin"* ]]; then
