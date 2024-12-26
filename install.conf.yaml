@@ -29,6 +29,7 @@
     ~/.vimrc:
     ~/.zshrc:
     ~/.vale.ini:
+    ~/.markdownlintrc:
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
