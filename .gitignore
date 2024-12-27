@@ -11,3 +11,6 @@ nvim/data
 
 # this is managed by tpm
 tmux/plugins/tmux
+
+k9s/clusters/
+k9s/k9s.log

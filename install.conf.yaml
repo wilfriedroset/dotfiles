@@ -13,6 +13,7 @@
     ~/.bashrc:
     ~/.config/bat/config: bat.conf
     ~/.config/nvim:
+    ~/.config/k9s:
     ~/.git-prompt-colors.sh:
     ~/.gitconfig:
     ~/.local/bin/tmux-env: scripts/tmux-env
