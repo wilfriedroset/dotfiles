@@ -1,4 +1,5 @@
 export ZSH="$HOME/.oh-my-zsh"
+export ZSH_CUSTOM="${ZSH}-custom"
 
 ZSH_THEME="robbyrussell"
 
@@ -12,6 +13,7 @@ plugins=(
   podman
   terraform
   zsh-navigation-tools
+  zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
