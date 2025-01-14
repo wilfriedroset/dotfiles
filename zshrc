@@ -15,6 +15,7 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+unsetopt share_history
 
 export LANG=en_US.UTF-8
 
