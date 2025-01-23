@@ -5,6 +5,25 @@ return {
       colorscheme = "catppuccin",
     },
   },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    opts = {
+      term_colors = true,
+      dim_inactive = {
+        enabled = true, -- dims the background color of inactive window
+        shade = "light",
+        percentage = 0.50, -- percentage of the shade to apply to the inactive window
+      },
+      highlight_overrides = {
+        all = function(colors)
+          return {
+            LineNr = { fg = colors.blue },
+          }
+        end,
+      },
+    },
+  },
   { "ConradIrwin/vim-bracketed-paste" },
   {
     "aserowy/tmux.nvim",
