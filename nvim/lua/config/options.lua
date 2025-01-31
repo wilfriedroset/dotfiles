@@ -3,3 +3,4 @@
 -- Add any additional options here
 
 vim.opt.clipboard = "" -- do not sync with system clipboard
+vim.opt.writebackup = false
