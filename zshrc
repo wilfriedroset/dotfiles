@@ -10,10 +10,11 @@ plugins=(
   git
   helm
   kubectl
+  kubectx
   podman
   terraform
-  zsh-navigation-tools
   zsh-autosuggestions
+  zsh-navigation-tools
 )
 
 source $ZSH/oh-my-zsh.sh
