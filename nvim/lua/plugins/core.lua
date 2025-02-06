@@ -228,4 +228,20 @@ return {
       },
     },
   },
+  {
+    "folke/snacks.nvim",
+    opts = {
+      -- scope = {
+      --   enabled = true,
+      -- },
+      indent = {
+        chunk = {
+          enabled = true,
+          only_current = true,
+        },
+      },
+      scroll = { enabled = false },
+      dim = { enabled = true },
+    },
+  },
 }
