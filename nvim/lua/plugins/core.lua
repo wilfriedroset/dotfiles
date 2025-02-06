@@ -219,4 +219,13 @@ return {
   { "echasnovski/mini.nvim", version = false },
   { "rfratto/vim-river" },
   { "towolf/vim-helm", ft = "helm" }, -- needed for helmls
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    opts = {
+      code = { style = "normal", border = "thick" },
+      win_options = {
+        conceallevel = { default = 0, rendered = 0 },
+      },
+    },
+  },
 }
