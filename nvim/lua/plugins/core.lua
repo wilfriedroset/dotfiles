@@ -125,6 +125,7 @@ return {
       },
     },
   },
+  { "nvim-treesitter/nvim-treesitter-context" },
 
   {
     "nvim-lualine/lualine.nvim",
