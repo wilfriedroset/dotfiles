@@ -44,8 +44,7 @@ return {
 
   {
     "ibhagwan/fzf-lua",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {},
+    enabled = false, -- replace by snacks.picker
   },
 
   -- add more treesitter parsers
@@ -177,18 +176,38 @@ return {
   },
   {
     "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
     opts = {
-      -- scope = {
-      --   enabled = true,
-      -- },
+      bigfile = { enabled = true },
+      dashboard = { example = "compact_files" },
+      dim = { enabled = true },
+      explorer = {
+        enabled = true,
+        replace_netrw = true, -- Replace netrw with the snacks explorer
+      },
+      git = { enabled = true },
       indent = {
+        enabled = true,
         chunk = {
           enabled = true,
           only_current = true,
         },
       },
+      input = { enabled = true },
+      notifier = { enabled = true },
+      picker = {
+        enabled = true,
+        matcher = {
+          frecency = true, -- frecency bonus
+          history_bonus = true, -- give more weight to chronological order
+        },
+      },
+      quickfile = { enabled = true },
+      scope = { enabled = true },
       scroll = { enabled = false },
-      dim = { enabled = true },
+      statuscolumn = { enabled = true },
+      words = { enabled = true },
     },
   },
 }
