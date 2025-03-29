@@ -136,7 +136,18 @@ return {
       },
     },
   },
-
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        go = { "goimports", "gofumpt" },
+      },
+      default_format_opts = {
+        lsp_format = "fallback",
+      },
+    },
+  },
   {
     "ray-x/go.nvim",
     dependencies = {
