@@ -15,3 +15,9 @@ create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = "*.tfvars",
   command = "set filetype=terraform",
 })
+
+create_autocmd({ "BufRead", "BufNewFile" }, {
+  group = config_group,
+  pattern = "*.alloy",
+  command = "set filetype=river",
+})
