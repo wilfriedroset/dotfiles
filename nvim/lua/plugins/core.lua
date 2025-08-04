@@ -6,6 +6,17 @@ return {
     },
   },
   {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    cmd = "LazyDev",
+    opts = {
+      library = {
+        -- the only use case is when I edit nvim config
+        "~/.dotfiles/nvim/lua",
+      },
+    },
+  },
+  {
     "catppuccin/nvim",
     name = "catppuccin",
     opts = {
