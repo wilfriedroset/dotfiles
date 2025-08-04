@@ -109,6 +109,7 @@ return {
         "ansible-language-server",
         "ansible-lint",
         "bash-language-server",
+        "debugpy",
         "dockerfile-language-server",
         "gci",
         "gofumpt",
