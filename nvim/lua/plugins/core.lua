@@ -123,7 +123,7 @@ return {
         "lua-language-server",
         "marksman",
         "puppet-editor-services",
-        "ruff-lsp",
+        "ruff",
         "shellcheck",
         "shfmt",
         "staticcheck",
