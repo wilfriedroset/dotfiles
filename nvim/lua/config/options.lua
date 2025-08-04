@@ -4,4 +4,5 @@
 
 vim.opt.clipboard = "" -- do not sync with system clipboard
 vim.opt.writebackup = false
+vim.opt.wrap = true
 vim.g.lazyvim_picker = "snacks"
