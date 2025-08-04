@@ -180,6 +180,7 @@ return {
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
+      latex = { enabled = false },
       code = { style = "normal", border = "thick" },
       win_options = {
         conceallevel = { default = 0, rendered = 0 },
