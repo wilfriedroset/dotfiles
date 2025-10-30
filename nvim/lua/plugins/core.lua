@@ -107,13 +107,13 @@ return {
     end,
   },
 
-  { "williamboman/mason-lspconfig.nvim" },
+  { "mason-org/mason-lspconfig.nvim" },
   { "neovim/nvim-lspconfig" },
   { "mfussenegger/nvim-dap" },
   { "rcarriga/nvim-dap-ui" },
   { "theHamsta/nvim-dap-virtual-text" },
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     lazy = false,
     opts = {
       ensure_installed = {
