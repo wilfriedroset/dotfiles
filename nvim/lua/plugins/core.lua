@@ -182,7 +182,7 @@ return {
   {
     "cappyzawa/trim.nvim",
   },
-  { "echasnovski/mini.nvim", version = false },
+  { "nvim-mini/mini.nvim", version = false },
   { "rfratto/vim-river" },
   { "towolf/vim-helm", ft = "helm" }, -- needed for helmls
   {

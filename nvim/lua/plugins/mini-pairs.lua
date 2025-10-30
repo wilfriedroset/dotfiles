@@ -1,6 +1,6 @@
 -- See: https://github.com/echasnovski/mini.nvim/issues/835
 return {
-  "echasnovski/mini.pairs",
+  "nvim-mini/mini.pairs",
   event = "VeryLazy",
   opts = {
     mappings = {
