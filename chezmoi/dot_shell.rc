@@ -1,0 +1,19 @@
+# This file is meant to be used by both bash and zsh in an attempt to make both
+# coexist as much as possible.
+
+# Detect the *current* shell (not $SHELL, which is the login shell and would be
+# wrong inside `bash` started from zsh, or vice versa).
+if [ -n "${ZSH_VERSION:-}" ]; then
+  shell_name=zsh
+elif [ -n "${BASH_VERSION:-}" ]; then
+  shell_name=bash
+else
+  shell_name=${SHELL##*/}
+fi
+
+[ -f "${HOME}/.iterm2_shell_integration.${shell_name}" ] && source "${HOME}/.iterm2_shell_integration.${shell_name}"
+[ -f "${HOME}/.fzf.${shell_name}" ] && source "${HOME}/.fzf.${shell_name}"
+[ -f "${HOME}/.shell.env" ] && source "${HOME}/.shell.env"
+[ -f "${HOME}/.shell.aliases" ] && source "${HOME}/.shell.aliases"
+
+[ -f "${HOME}/.shell.rc.local" ] && source "${HOME}/.shell.rc.local"
