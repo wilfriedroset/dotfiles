@@ -47,4 +47,4 @@ fi
 [ -f "${HOME}/.bash_aliases" ] && source "${HOME}/.bash_aliases"
 [ -f "${HOME}/.bashrc.local" ] && source "${HOME}/.bashrc.local"
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# fzf integration is sourced once from shell.rc for both shells.
