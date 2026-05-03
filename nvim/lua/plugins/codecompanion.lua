@@ -1,19 +1,5 @@
 return {
   {
-    "ravitemer/mcphub.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    build = "npm install -g mcp-hub@latest",
-    config = function()
-      require("mcphub").setup({
-        log = {
-          level = vim.log.levels.WARN,
-        },
-      })
-    end,
-  },
-  {
     "olimorris/codecompanion.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
