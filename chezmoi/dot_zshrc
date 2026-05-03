@@ -1,0 +1,45 @@
+# Bare zsh — no plugin manager. Tuned for tmux pane spawn latency.
+# Plugins are vendored by chezmoi externals (see .chezmoiexternal.toml).
+
+# --- Completions ---------------------------------------------------------
+# Cached compinit: full security audit only when the dump is older than 24h,
+# otherwise reuse the cached version.
+autoload -Uz compinit
+if [[ -n ${HOME}/.zcompdump(#qNmh-24) ]]; then
+    compinit -C -d "${HOME}/.zcompdump"
+else
+    compinit -d "${HOME}/.zcompdump"
+    touch "${HOME}/.zcompdump"
+fi
+
+# --- Plugins -------------------------------------------------------------
+# zsh-autosuggestions — fish-style ghost text, sole runtime plugin.
+[ -f "${HOME}/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ] \
+    && source "${HOME}/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+# --- Aliases + lazy completions -----------------------------------------
+# kubectl: alias `k` and lazy-load completion on first invocation. Native
+# `kubectl completion zsh` is ~70ms — only paid once per shell, only if used.
+alias k=kubectl
+kubectl() {
+    unfunction kubectl
+    source <(command kubectl completion zsh)
+    compdef __start_kubectl k 2>/dev/null
+    kubectl "$@"
+}
+
+# --- Prompt --------------------------------------------------------------
+source "${HOME}/.zsh/prompt.zsh"
+
+# --- History -------------------------------------------------------------
+HISTFILE="${HOME}/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+setopt hist_ignore_dups hist_ignore_space inc_append_history extended_glob
+unsetopt share_history
+
+# --- Shared with bash (env, aliases, fzf, iterm2) -----------------------
+[ -f "${HOME}/.shell.rc" ] && source "${HOME}/.shell.rc"
+
+# --- Per-machine override -----------------------------------------------
+[ -f "${HOME}/.zshrc.local" ] && source "${HOME}/.zshrc.local"
