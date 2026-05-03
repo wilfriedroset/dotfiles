@@ -3,15 +3,19 @@
 
 alias c='clear'
 
-# Enable some colors if the option is available
-# don't care about the output, only to check if the option is available e.g: old version on osx
-ls --color=auto &> /dev/null
-if [ $? -eq 0 ]; then
-    alias ls='ls --color=auto'
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+# Colored ls/grep — GNU coreutils on Linux uses --color, BSD on macOS uses -G.
+# Branch on $OSTYPE instead of probing ls (avoids a fork on every shell start).
+case "$OSTYPE" in
+    linux*)
+        alias ls='ls --color=auto'
+        alias grep='grep --color=auto'
+        alias fgrep='fgrep --color=auto'
+        alias egrep='egrep --color=auto'
+        ;;
+    darwin*)
+        alias ls='ls -G'
+        ;;
+esac
 
 # some more ls aliases
 alias ll='ls -l'

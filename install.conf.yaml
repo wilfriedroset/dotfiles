@@ -28,6 +28,7 @@
     ~/.vim/bundle/Vundle.vim: Vundle.vim
     ~/.vimrc:
     ~/.zshrc:
+    ~/.zshenv:
     ~/.vale.ini:
     ~/.markdownlintrc:
 
