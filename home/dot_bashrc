@@ -36,13 +36,9 @@ if ! shopt -oq posix; then
   [ -f "${HOME}/.local/etc/bash_completion" ] && source "${HOME}/.local/etc/bash_completion"
 fi
 
-# Let's have a useful prompt
-if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
-    export PROMPT_DIRTRIM=3  # works starting bash v4.0
-    GIT_PROMPT_ONLY_IN_REPO=0
-    GIT_PROMPT_THEME=Custom
-    source "${HOME}/.bash-git-prompt/gitprompt.sh"
-fi
+# Prompt (starship). Binary fetched by chezmoi external; `command -v`
+# guards against first-boot ordering before the external runs.
+command -v starship >/dev/null && eval "$(starship init bash)"
 
 [ -f "${HOME}/.bash_aliases" ] && source "${HOME}/.bash_aliases"
 [ -f "${HOME}/.bashrc.local" ] && source "${HOME}/.bashrc.local"

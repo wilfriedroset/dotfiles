@@ -28,8 +28,10 @@ kubectl() {
     kubectl "$@"
 }
 
-# --- Prompt --------------------------------------------------------------
-source "${HOME}/.zsh/prompt.zsh"
+# --- Prompt (starship) ---------------------------------------------------
+# Binary fetched by chezmoi external; init emits the precmd/preexec hooks.
+# `command -v` guards against first-boot ordering before the external runs.
+command -v starship >/dev/null && eval "$(starship init zsh)"
 
 # --- History -------------------------------------------------------------
 HISTFILE="${HOME}/.zsh_history"
