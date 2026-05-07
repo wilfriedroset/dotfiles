@@ -1,10 +1,10 @@
 # External dependencies fetched by `chezmoi apply`.
 #
 # Two flavours:
-#   - `git-repo`: shell/editor plugins cloned from GitHub. These replace
-#     the submodules used by the previous dotbot setup.
-#   - `archive-file`: single-binary tools downloaded directly from GitHub
-#     releases. Cross-platform via .chezmoi.os / .chezmoi.arch.
+#   - git-repo:                    shell/editor plugins cloned from GitHub.
+#   - file / archive / archive-file: binaries from GitHub releases or
+#                                    dl.k8s.io. Cross-platform via
+#                                    .chezmoi.os / .chezmoi.arch.
 
 # --- Plugins (clones) ----------------------------------------------------
 
@@ -33,19 +33,38 @@
     url = "https://github.com/kunkku/todo.txt-cli-chcon.git"
     refreshPeriod = "168h"
 
-# --- Single-binary tools (GitHub releases) -------------------------------
-# Map chezmoi's os/arch tokens to the rust-target tokens GitHub releases use.
+# --- Binaries (release downloads) ---------------------------------------
+# Naming conventions vary per tool. Map .chezmoi.os/.arch to each.
 
 {{- $arch := "x86_64" -}}
 {{- if eq .chezmoi.arch "arm64" -}}{{- $arch = "aarch64" -}}{{- end -}}
 
+# Rust target. Linux x86_64 release artifacts are musl; arm64 is gnu-only.
 {{- $rustTarget := "" -}}
 {{- if eq .chezmoi.os "darwin" -}}
 {{-   $rustTarget = printf "%s-apple-darwin" $arch -}}
 {{- else if eq .chezmoi.os "linux" -}}
-{{-   $rustTarget = printf "%s-unknown-linux-gnu" $arch -}}
+{{-   if eq .chezmoi.arch "amd64" -}}
+{{-     $rustTarget = "x86_64-unknown-linux-musl" -}}
+{{-   else -}}
+{{-     $rustTarget = "aarch64-unknown-linux-gnu" -}}
+{{-   end -}}
 {{- end }}
 
+# nvim — full distribution (binary needs lib/ + share/ siblings).
+{{- $nvimOs := .chezmoi.os -}}
+{{- if eq $nvimOs "darwin" -}}{{- $nvimOs = "macos" -}}{{- end -}}
+{{- $nvimArch := "x86_64" -}}
+{{- if eq .chezmoi.arch "arm64" -}}{{- $nvimArch = "arm64" -}}{{- end }}
+
+[".local/opt/nvim"]
+    type = "archive"
+    url = {{ gitHubLatestReleaseAssetURL "neovim/neovim" (printf "nvim-%s-%s.tar.gz" $nvimOs $nvimArch) | quote }}
+    stripComponents = 1
+    exact = true
+    refreshPeriod = "168h"
+
+# starship
 {{ if $rustTarget -}}
 [".local/bin/starship"]
     type = "archive-file"
@@ -54,3 +73,65 @@
     path = "starship"
     refreshPeriod = "168h"
 {{- end }}
+
+# ripgrep — versioned dir, extract whole tree.
+{{ if $rustTarget -}}
+[".local/opt/ripgrep"]
+    type = "archive"
+    url = {{ gitHubLatestReleaseAssetURL "BurntSushi/ripgrep" (printf "ripgrep-*-%s.tar.gz" $rustTarget) | quote }}
+    stripComponents = 1
+    exact = true
+    refreshPeriod = "168h"
+{{- end }}
+
+# fd
+{{ if $rustTarget -}}
+[".local/opt/fd"]
+    type = "archive"
+    url = {{ gitHubLatestReleaseAssetURL "sharkdp/fd" (printf "fd-v*-%s.tar.gz" $rustTarget) | quote }}
+    stripComponents = 1
+    exact = true
+    refreshPeriod = "168h"
+{{- end }}
+
+# bat
+{{ if $rustTarget -}}
+[".local/opt/bat"]
+    type = "archive"
+    url = {{ gitHubLatestReleaseAssetURL "sharkdp/bat" (printf "bat-v*-%s.tar.gz" $rustTarget) | quote }}
+    stripComponents = 1
+    exact = true
+    refreshPeriod = "168h"
+{{- end }}
+
+# fzf — flat tarball with a single binary.
+[".local/bin/fzf"]
+    type = "archive-file"
+    url = {{ gitHubLatestReleaseAssetURL "junegunn/fzf" (printf "fzf-*-%s_%s.tar.gz" .chezmoi.os .chezmoi.arch) | quote }}
+    executable = true
+    path = "fzf"
+    refreshPeriod = "168h"
+
+# kubectl — pinned to whatever dl.k8s.io says is current stable.
+{{ $kubectlVersion := output "curl" "-fsSL" "https://dl.k8s.io/release/stable.txt" | trim -}}
+[".local/bin/kubectl"]
+    type = "file"
+    url = {{ printf "https://dl.k8s.io/release/%s/bin/%s/%s/kubectl" $kubectlVersion .chezmoi.os .chezmoi.arch | quote }}
+    executable = true
+    refreshPeriod = "168h"
+
+# kind — single binary asset.
+[".local/bin/kind"]
+    type = "file"
+    url = {{ gitHubLatestReleaseAssetURL "kubernetes-sigs/kind" (printf "kind-%s-%s" .chezmoi.os .chezmoi.arch) | quote }}
+    executable = true
+    refreshPeriod = "168h"
+
+# k9s — capitalised OS in asset name (Darwin/Linux).
+{{ $k9sOs := title .chezmoi.os -}}
+[".local/bin/k9s"]
+    type = "archive-file"
+    url = {{ gitHubLatestReleaseAssetURL "derailed/k9s" (printf "k9s_%s_%s.tar.gz" $k9sOs .chezmoi.arch) | quote }}
+    executable = true
+    path = "k9s"
+    refreshPeriod = "168h"
