@@ -51,7 +51,8 @@
 {{-   end -}}
 {{- end }}
 
-# nvim — full distribution (binary needs lib/ + share/ siblings).
+# nvim — full distribution (binary needs lib/ + share/ siblings, lives
+# in ~/.local/opt/nvim and is added to PATH by dot_shell.env).
 {{- $nvimOs := .chezmoi.os -}}
 {{- if eq $nvimOs "darwin" -}}{{- $nvimOs = "macos" -}}{{- end -}}
 {{- $nvimArch := "x86_64" -}}
@@ -64,7 +65,7 @@
     exact = true
     refreshPeriod = "168h"
 
-# starship
+# starship — flat archive (binary at archive root).
 {{ if $rustTarget -}}
 [".local/bin/starship"]
     type = "archive-file"
@@ -74,33 +75,40 @@
     refreshPeriod = "168h"
 {{- end }}
 
-# ripgrep — versioned dir, extract whole tree.
+# ripgrep — versioned dir; derive its name from the asset URL so we can
+# point archive-file at the binary inside without globbing.
 {{ if $rustTarget -}}
-[".local/opt/ripgrep"]
-    type = "archive"
-    url = {{ gitHubLatestReleaseAssetURL "BurntSushi/ripgrep" (printf "ripgrep-*-%s.tar.gz" $rustTarget) | quote }}
-    stripComponents = 1
-    exact = true
+{{- $rgUrl := gitHubLatestReleaseAssetURL "BurntSushi/ripgrep" (printf "ripgrep-*-%s.tar.gz" $rustTarget) -}}
+{{- $rgDir := trimSuffix ".tar.gz" (base $rgUrl) }}
+[".local/bin/rg"]
+    type = "archive-file"
+    url = {{ $rgUrl | quote }}
+    executable = true
+    path = "{{ $rgDir }}/rg"
     refreshPeriod = "168h"
 {{- end }}
 
-# fd
+# fd — same pattern.
 {{ if $rustTarget -}}
-[".local/opt/fd"]
-    type = "archive"
-    url = {{ gitHubLatestReleaseAssetURL "sharkdp/fd" (printf "fd-v*-%s.tar.gz" $rustTarget) | quote }}
-    stripComponents = 1
-    exact = true
+{{- $fdUrl := gitHubLatestReleaseAssetURL "sharkdp/fd" (printf "fd-v*-%s.tar.gz" $rustTarget) -}}
+{{- $fdDir := trimSuffix ".tar.gz" (base $fdUrl) }}
+[".local/bin/fd"]
+    type = "archive-file"
+    url = {{ $fdUrl | quote }}
+    executable = true
+    path = "{{ $fdDir }}/fd"
     refreshPeriod = "168h"
 {{- end }}
 
-# bat
+# bat — same pattern.
 {{ if $rustTarget -}}
-[".local/opt/bat"]
-    type = "archive"
-    url = {{ gitHubLatestReleaseAssetURL "sharkdp/bat" (printf "bat-v*-%s.tar.gz" $rustTarget) | quote }}
-    stripComponents = 1
-    exact = true
+{{- $batUrl := gitHubLatestReleaseAssetURL "sharkdp/bat" (printf "bat-v*-%s.tar.gz" $rustTarget) -}}
+{{- $batDir := trimSuffix ".tar.gz" (base $batUrl) }}
+[".local/bin/bat"]
+    type = "archive-file"
+    url = {{ $batUrl | quote }}
+    executable = true
+    path = "{{ $batDir }}/bat"
     refreshPeriod = "168h"
 {{- end }}
 
