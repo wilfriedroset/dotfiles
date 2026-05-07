@@ -1,5 +1,9 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+# Blank line before the prompt (default), but no line_break inside the
+# format — info modules and the prompt char share a single row.
+add_newline = true
+
 format = """
 $username\
 $hostname\
@@ -8,7 +12,6 @@ $git_branch\
 $git_state\
 $git_status\
 $cmd_duration\
-$line_break\
 $python\
 $character"""
 
@@ -21,11 +24,16 @@ error_symbol = "[❯](red)"
 vimcmd_symbol = "[❮](green)"
 
 [git_branch]
-format = "[$branch]($style)"
+format = "[$branch]($style) "
 style = "bright-black"
 
 [git_status]
-format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
+# Outer (...) makes the entire format — trailing space included —
+# conditional on any var being non-empty, so a clean repo doesn't add
+# an extra gap between $git_branch and $character. Leading space lives
+# inside the ($ahead_behind$stashed) group so a dirty-only render
+# stays single-spaced.
+format = "([[(*$conflicted$untracked$modified$staged$renamed$deleted)](218)( $ahead_behind$stashed)]($style) )"
 style = "cyan"
 conflicted = "​"
 untracked = "​"
