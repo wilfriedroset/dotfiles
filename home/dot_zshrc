@@ -17,6 +17,34 @@ fi
 [ -f "${HOME}/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ] \
     && source "${HOME}/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
+# --- Key bindings --------------------------------------------------------
+# zsh ships almost no terminal-key bindings by default and picks vi mode
+# when $EDITOR matches *vi* (which "nvim" does). Force emacs mode and
+# wire Home/End/Delete/Option+Backspace via terminfo with literal-escape
+# fallbacks for terminals whose terminfo entry isn't installed remotely.
+bindkey -e
+
+typeset -A _zkey
+_zkey[Home]="${terminfo[khome]}"
+_zkey[End]="${terminfo[kend]}"
+_zkey[Delete]="${terminfo[kdch1]}"
+[[ -n ${_zkey[Home]}   ]] && bindkey -- "${_zkey[Home]}"   beginning-of-line
+[[ -n ${_zkey[End]}    ]] && bindkey -- "${_zkey[End]}"    end-of-line
+[[ -n ${_zkey[Delete]} ]] && bindkey -- "${_zkey[Delete]}" delete-char
+unset _zkey
+
+# Fallbacks for the common escape sequences. Different terminals send
+# different forms (xterm vs vt220 vs application mode); bind them all so
+# this rc works on Ghostty, iTerm2, Terminal.app, gnome-terminal, and
+# whatever remote box you ssh into.
+bindkey '^[[H'  beginning-of-line   # xterm
+bindkey '^[OH'  beginning-of-line   # xterm application mode
+bindkey '^[[1~' beginning-of-line   # vt220 / ghostty / linux console
+bindkey '^[[F'  end-of-line
+bindkey '^[OF'  end-of-line
+bindkey '^[[4~' end-of-line
+bindkey '^[[3~' delete-char         # forward Delete
+
 # --- Aliases + lazy completions -----------------------------------------
 # kubectl: alias `k` and lazy-load completion on first invocation. Native
 # `kubectl completion zsh` is ~70ms — only paid once per shell, only if used.
