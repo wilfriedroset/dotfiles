@@ -3,12 +3,22 @@
 
 alias c='clear'
 
+# Modern-CLI replacements. Tools are installed by chezmoi externals; on a
+# fresh box where chezmoi has not yet fetched them, these aliases are
+# defined but resolve to "command not found" until first apply completes.
+alias cat='bat'
+alias find='fd'
+alias grep='rg'
+alias vim='nvim'
+alias vimdiff='nvim -d'
+
 # Colored ls/grep — GNU coreutils on Linux uses --color, BSD on macOS uses -G.
 # Branch on $OSTYPE instead of probing ls (avoids a fork on every shell start).
 case "$OSTYPE" in
     linux*)
         alias ls='ls --color=auto'
-        alias grep='grep --color=auto'
+        # grep is shadowed by the rg alias above; fgrep/egrep keep the
+        # GNU --color flag because they aren't aliased to rg.
         alias fgrep='fgrep --color=auto'
         alias egrep='egrep --color=auto'
         ;;
