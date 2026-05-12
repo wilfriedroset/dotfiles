@@ -26,7 +26,12 @@
     refreshPeriod = "168h"
 
 # --- Binaries (release downloads) ---------------------------------------
-# Naming conventions vary per tool. Map .chezmoi.os/.arch to each.
+# Pinned versions instead of `gitHubLatestReleaseAssetURL` so a fresh
+# `chezmoi apply` makes zero GitHub API calls. The unauthenticated limit
+# is 60/hr — one apply with `latest` lookups burns ~8 of them and a
+# freshly-provisioned VM that retries a few times can lock itself out
+# for ~hour. Bump versions below by hand (or via a bump script).
+# Naming conventions vary per tool; OS/arch mapping is below.
 
 {{- $arch := "x86_64" -}}
 {{- if eq .chezmoi.arch "arm64" -}}{{- $arch = "aarch64" -}}{{- end -}}
@@ -41,7 +46,17 @@
 {{-   else -}}
 {{-     $rustTarget = "aarch64-unknown-linux-gnu" -}}
 {{-   end -}}
-{{- end }}
+{{- end -}}
+
+# Pinned versions — bump these to update.
+{{- $nvimVersion      := "v0.12.2" -}}
+{{- $starshipVersion  := "v1.25.1" -}}
+{{- $ripgrepVersion   := "15.1.0"  -}}
+{{- $fdVersion        := "v10.4.2" -}}
+{{- $batVersion       := "v0.26.1" -}}
+{{- $fzfVersion       := "v0.72.0" -}}
+{{- $kindVersion      := "v0.31.0" -}}
+{{- $k9sVersion       := "v0.50.18" -}}
 
 # nvim — full distribution (binary needs lib/ + share/ siblings, lives
 # in ~/.local/opt/nvim and is added to PATH by dot_shell.env).
@@ -52,7 +67,7 @@
 
 [".local/opt/nvim"]
     type = "archive"
-    url = {{ gitHubLatestReleaseAssetURL "neovim/neovim" (printf "nvim-%s-%s.tar.gz" $nvimOs $nvimArch) | quote }}
+    url = {{ printf "https://github.com/neovim/neovim/releases/download/%s/nvim-%s-%s.tar.gz" $nvimVersion $nvimOs $nvimArch | quote }}
     stripComponents = 1
     exact = true
     refreshPeriod = "168h"
@@ -61,20 +76,19 @@
 {{ if $rustTarget -}}
 [".local/bin/starship"]
     type = "archive-file"
-    url = {{ gitHubLatestReleaseAssetURL "starship/starship" (printf "starship-%s.tar.gz" $rustTarget) | quote }}
+    url = {{ printf "https://github.com/starship/starship/releases/download/%s/starship-%s.tar.gz" $starshipVersion $rustTarget | quote }}
     executable = true
     path = "starship"
     refreshPeriod = "168h"
 {{- end }}
 
-# ripgrep — versioned dir; derive its name from the asset URL so we can
-# point archive-file at the binary inside without globbing.
+# ripgrep — versioned dir; build its name from the pinned version so
+# archive-file can point at the binary inside without globbing.
 {{ if $rustTarget -}}
-{{- $rgUrl := gitHubLatestReleaseAssetURL "BurntSushi/ripgrep" (printf "ripgrep-*-%s.tar.gz" $rustTarget) -}}
-{{- $rgDir := trimSuffix ".tar.gz" (base $rgUrl) }}
+{{- $rgDir := printf "ripgrep-%s-%s" $ripgrepVersion $rustTarget }}
 [".local/bin/rg"]
     type = "archive-file"
-    url = {{ $rgUrl | quote }}
+    url = {{ printf "https://github.com/BurntSushi/ripgrep/releases/download/%s/%s.tar.gz" $ripgrepVersion $rgDir | quote }}
     executable = true
     path = "{{ $rgDir }}/rg"
     refreshPeriod = "168h"
@@ -82,11 +96,10 @@
 
 # fd — same pattern.
 {{ if $rustTarget -}}
-{{- $fdUrl := gitHubLatestReleaseAssetURL "sharkdp/fd" (printf "fd-v*-%s.tar.gz" $rustTarget) -}}
-{{- $fdDir := trimSuffix ".tar.gz" (base $fdUrl) }}
+{{- $fdDir := printf "fd-%s-%s" $fdVersion $rustTarget }}
 [".local/bin/fd"]
     type = "archive-file"
-    url = {{ $fdUrl | quote }}
+    url = {{ printf "https://github.com/sharkdp/fd/releases/download/%s/%s.tar.gz" $fdVersion $fdDir | quote }}
     executable = true
     path = "{{ $fdDir }}/fd"
     refreshPeriod = "168h"
@@ -94,25 +107,27 @@
 
 # bat — same pattern.
 {{ if $rustTarget -}}
-{{- $batUrl := gitHubLatestReleaseAssetURL "sharkdp/bat" (printf "bat-v*-%s.tar.gz" $rustTarget) -}}
-{{- $batDir := trimSuffix ".tar.gz" (base $batUrl) }}
+{{- $batDir := printf "bat-%s-%s" $batVersion $rustTarget }}
 [".local/bin/bat"]
     type = "archive-file"
-    url = {{ $batUrl | quote }}
+    url = {{ printf "https://github.com/sharkdp/bat/releases/download/%s/%s.tar.gz" $batVersion $batDir | quote }}
     executable = true
     path = "{{ $batDir }}/bat"
     refreshPeriod = "168h"
 {{- end }}
 
-# fzf — flat tarball with a single binary.
+# fzf — flat tarball with a single binary. Asset name drops the leading
+# "v" from the tag.
+{{- $fzfAssetVersion := trimPrefix "v" $fzfVersion }}
 [".local/bin/fzf"]
     type = "archive-file"
-    url = {{ gitHubLatestReleaseAssetURL "junegunn/fzf" (printf "fzf-*-%s_%s.tar.gz" .chezmoi.os .chezmoi.arch) | quote }}
+    url = {{ printf "https://github.com/junegunn/fzf/releases/download/%s/fzf-%s-%s_%s.tar.gz" $fzfVersion $fzfAssetVersion .chezmoi.os .chezmoi.arch | quote }}
     executable = true
     path = "fzf"
     refreshPeriod = "168h"
 
-# kubectl — pinned to whatever dl.k8s.io says is current stable.
+# kubectl — pinned to whatever dl.k8s.io says is current stable. Not on
+# GitHub so it doesn't count against the rate limit.
 {{ $kubectlVersion := output "curl" "-fsSL" "https://dl.k8s.io/release/stable.txt" | trim -}}
 [".local/bin/kubectl"]
     type = "file"
@@ -123,7 +138,7 @@
 # kind — single binary asset.
 [".local/bin/kind"]
     type = "file"
-    url = {{ gitHubLatestReleaseAssetURL "kubernetes-sigs/kind" (printf "kind-%s-%s" .chezmoi.os .chezmoi.arch) | quote }}
+    url = {{ printf "https://github.com/kubernetes-sigs/kind/releases/download/%s/kind-%s-%s" $kindVersion .chezmoi.os .chezmoi.arch | quote }}
     executable = true
     refreshPeriod = "168h"
 
@@ -131,7 +146,7 @@
 {{ $k9sOs := title .chezmoi.os -}}
 [".local/bin/k9s"]
     type = "archive-file"
-    url = {{ gitHubLatestReleaseAssetURL "derailed/k9s" (printf "k9s_%s_%s.tar.gz" $k9sOs .chezmoi.arch) | quote }}
+    url = {{ printf "https://github.com/derailed/k9s/releases/download/%s/k9s_%s_%s.tar.gz" $k9sVersion $k9sOs .chezmoi.arch | quote }}
     executable = true
     path = "k9s"
     refreshPeriod = "168h"
