@@ -1,43 +1,6 @@
-" =====================================
-" ===           Plugins             ===
-" =====================================
-
-set nocompatible " be iMproved, required
-filetype off " required
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+set nocompatible
 set rtp+=~/.local/opt/fzf
-call vundle#begin()
-
-Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
-
-" Tools
-Plugin 'ConradIrwin/vim-bracketed-paste' " paste enables transparent pasting into vim
-Plugin 'Vimjas/vim-python-pep8-indent' " A nicer Python indentation style for vim.
-Plugin 'christoomey/vim-tmux-navigator' " move between Vim panes and tmux splits seamlessly.
-Plugin 'dense-analysis/ale'
-Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'preservim/nerdtree'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-sensible'
-Plugin 'tpope/vim-fugitive'
-Plugin 'godlygeek/tabular'
-
-" Theme & Code display
-Plugin 'glench/vim-jinja2-syntax'
-Plugin 'rodjek/vim-puppet'
-Plugin 'shmup/vim-sql-syntax'
-Plugin 'vim-airline/vim-airline'
-Plugin 'hashivim/vim-terraform'
-Plugin 'google/vim-jsonnet'
-Plugin 'catppuccin/vim'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+filetype plugin indent on
 syntax on
 
 " =====================================
