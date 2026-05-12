@@ -5,7 +5,6 @@
 add_newline = true
 
 format = """
-$username\
 $hostname\
 $directory\
 $git_branch\
@@ -14,6 +13,13 @@ $git_status\
 $cmd_duration\
 $python\
 $character"""
+
+[hostname]
+# Default format trails with " in "; trim it so SSH boxes read
+# "🌐 hostname ~ ❯" instead of "🌐 hostname in ~ ❯". ssh_only stays
+# true (the default), so this whole block is silent on local shells.
+format = "[$ssh_symbol$hostname]($style) "
+style = "bright-black"
 
 [directory]
 style = "blue"
