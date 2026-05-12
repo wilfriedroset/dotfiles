@@ -1,36 +1,50 @@
 # External dependencies fetched by `chezmoi apply`.
 #
-# Two flavours:
-#   - git-repo:                    shell/editor plugins cloned from GitHub.
-#   - file / archive / archive-file: binaries from GitHub releases or
+#   - archive:                       shell/editor plugins as pinned tarballs.
+#   - file / archive-file:           binaries from GitHub releases or
 #                                    dl.k8s.io. Cross-platform via
 #                                    .chezmoi.os / .chezmoi.arch.
 
-# --- Plugins (clones) ----------------------------------------------------
+# --- Plugins (pinned release tarballs) -----------------------------------
+# Pinned to fixed tags/commits and fetched as archives. `git-repo` externals
+# trip over each other on a fresh box when none of the target dirs exist
+# yet, so we trade rolling HEAD for deterministic, single-shot installs.
+# Bump the version/sha here when an update is wanted.
 
 [".zsh/plugins/zsh-autosuggestions"]
-    type = "git-repo"
-    url = "https://github.com/zsh-users/zsh-autosuggestions.git"
+    type = "archive"
+    url = "https://github.com/zsh-users/zsh-autosuggestions/archive/refs/tags/v0.7.1.tar.gz"
+    stripComponents = 1
+    exact = true
     refreshPeriod = "168h"
 
 [".tmux/plugins/tpm"]
-    type = "git-repo"
-    url = "https://github.com/tmux-plugins/tpm.git"
+    type = "archive"
+    url = "https://github.com/tmux-plugins/tpm/archive/refs/tags/v3.1.0.tar.gz"
+    stripComponents = 1
+    exact = true
     refreshPeriod = "168h"
 
 [".vim/bundle/Vundle.vim"]
-    type = "git-repo"
-    url = "https://github.com/VundleVim/Vundle.vim.git"
+    type = "archive"
+    url = "https://github.com/VundleVim/Vundle.vim/archive/refs/tags/v0.10.2.tar.gz"
+    stripComponents = 1
+    exact = true
     refreshPeriod = "168h"
 
+# No upstream tags — pinned to current master HEAD.
 [".todo.actions.d/graph"]
-    type = "git-repo"
-    url = "https://github.com/timpulver/todo.txt-graph.git"
+    type = "archive"
+    url = "https://github.com/timpulver/todo.txt-graph/archive/06672fd0c81301896f4fbb5dac8863a30944ff49.tar.gz"
+    stripComponents = 1
+    exact = true
     refreshPeriod = "168h"
 
 [".todo.actions.d/chcon"]
-    type = "git-repo"
-    url = "https://github.com/kunkku/todo.txt-cli-chcon.git"
+    type = "archive"
+    url = "https://github.com/kunkku/todo.txt-cli-chcon/archive/0539a661a76d88a14e4eb1613cc5436597ea2263.tar.gz"
+    stripComponents = 1
+    exact = true
     refreshPeriod = "168h"
 
 # --- Binaries (release downloads) ---------------------------------------
