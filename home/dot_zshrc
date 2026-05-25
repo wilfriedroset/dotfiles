@@ -2,6 +2,9 @@
 # Plugins are vendored by chezmoi externals (see .chezmoiexternal.toml).
 
 # --- Completions ---------------------------------------------------------
+# Case-insensitive matching: 'api' matches 'API'.
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
 # Cached compinit: full security audit only when the dump is older than 24h,
 # otherwise reuse the cached version.
 autoload -Uz compinit
@@ -22,6 +25,10 @@ fi
 # when $EDITOR matches *vi* (which "nvim" does). Force emacs mode and
 # wire Home/End/Delete/Option+Backspace via terminfo with literal-escape
 # fallbacks for terminals whose terminfo entry isn't installed remotely.
+# OMZ default: zsh standard minus '/' so option+backspace stops at path
+# component boundaries. Explicit value avoids fragile string patching.
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
 bindkey -e
 
 typeset -A _zkey
