@@ -57,6 +57,7 @@
 {{- $fzfVersion       := "v0.72.0" -}}
 {{- $kindVersion      := "v0.31.0" -}}
 {{- $k9sVersion       := "v0.50.18" -}}
+{{- $mpSkillsRev      := "b8be62ffacb0118fa3eaa29a0923c87c8c11985c" -}}
 
 # nvim — full distribution (binary needs lib/ + share/ siblings, lives
 # in ~/.local/opt/nvim and is added to PATH by dot_shell.env).
@@ -150,3 +151,35 @@
     executable = true
     path = "k9s"
     refreshPeriod = "168h"
+
+# --- Claude Code skills (vendored from upstream) ------------------------
+# Each skill lands in ~/.claude/skills/<name>/ as its own archive external.
+# Skill repos are laid out differently, so url/include/stripComponents are
+# per-entry, not global. Entries sharing a url are fetched once and served
+# from cache, so many skills from one repo cost one download.
+#
+# mattpocock/skills: pinned by commit SHA ($mpSkillsRev above) — upstream
+# cuts no tags. Layout is skills-<sha>/skills/<category>/<name>/, so
+# stripComponents = 4 drops those levels and the skill's files land
+# directly under the target. The list below loops to one external each;
+# add a skill by appending {name, category}, bump $mpSkillsRev to update.
+{{- $mpUrl := printf "https://github.com/mattpocock/skills/archive/%s.tar.gz" $mpSkillsRev -}}
+{{- $mpSkills := list
+      (dict "name" "grill-me"                      "category" "productivity")
+      (dict "name" "handoff"                       "category" "productivity")
+      (dict "name" "grill-with-docs"               "category" "engineering")
+      (dict "name" "improve-codebase-architecture" "category" "engineering")
+      (dict "name" "tdd"                           "category" "engineering")
+-}}
+{{ range $mpSkills }}
+[".claude/skills/{{ .name }}"]
+    type = "archive"
+    url = {{ $mpUrl | quote }}
+    include = ["{{ printf "**/skills/%s/%s/**" .category .name }}"]
+    stripComponents = 4
+    exact = true
+    refreshPeriod = "168h"
+{{ end }}
+# Skills from other repos: add explicit blocks here. They will not share
+# the mattpocock layout, so set url/include/stripComponents to match that
+# repo's tarball (one block per skill, same shape as the externals above).
