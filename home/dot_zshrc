@@ -58,8 +58,10 @@ bindkey '^[[3~' delete-char         # forward Delete
 alias k=kubectl
 kubectl() {
     unfunction kubectl
-    source <(command kubectl completion zsh)
-    compdef __start_kubectl k 2>/dev/null
+    if (( ${+_comps} )); then
+        source <(command kubectl completion zsh) 2>/dev/null
+        compdef __start_kubectl k 2>/dev/null
+    fi
     kubectl "$@"
 }
 
