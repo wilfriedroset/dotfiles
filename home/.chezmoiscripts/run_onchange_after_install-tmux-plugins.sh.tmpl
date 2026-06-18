@@ -1,0 +1,25 @@
+#!/bin/sh
+# Fetch TPM-managed tmux plugins headlessly after apply.
+# Without this, a fresh machine has TPM (provisioned via .chezmoiexternal.toml)
+# but none of the @plugin entries from ~/.tmux.conf, so catppuccin never loads.
+#
+# run_onchange + this hash: re-runs whenever the plugin list in dot_tmux.conf
+# changes, so newly-added @plugin entries get fetched on the next apply.
+# tmux.conf hash: {{ include "dot_tmux.conf" | sha256sum }}
+
+set -eu
+
+# tmux absent on this host (e.g. a server-only box): nothing to do.
+if ! command -v tmux >/dev/null 2>&1; then
+    echo "tmux not installed; skipping plugin install" >&2
+    exit 0
+fi
+
+installer="${HOME}/.tmux/plugins/tpm/bin/install_plugins"
+if [ ! -x "${installer}" ]; then
+    echo "TPM not found at ${installer}; skipping plugin install" >&2
+    exit 0
+fi
+
+echo "Installing tmux plugins via TPM" >&2
+"${installer}"
