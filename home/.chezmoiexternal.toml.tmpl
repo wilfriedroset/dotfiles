@@ -57,7 +57,7 @@
 {{- $fzfVersion       := "v0.72.0" -}}
 {{- $kindVersion      := "v0.31.0" -}}
 {{- $k9sVersion       := "v0.50.18" -}}
-{{- $mpSkillsRev      := "b8be62ffacb0118fa3eaa29a0923c87c8c11985c" -}}
+{{- $mpSkillsRev      := "5d78bd0903420f97c791f834201e550c765699f8" -}}
 
 # nvim — full distribution (binary needs lib/ + share/ siblings, lives
 # in ~/.local/opt/nvim and is added to PATH by dot_shell.env).
@@ -165,10 +165,16 @@
 # add a skill by appending {name, category}, bump $mpSkillsRev to update.
 {{- $mpUrl := printf "https://github.com/mattpocock/skills/archive/%s.tar.gz" $mpSkillsRev -}}
 {{- $mpSkills := list
+
       (dict "name" "grill-me"                      "category" "productivity")
       (dict "name" "handoff"                       "category" "productivity")
+      (dict "name" "writing-great-skills"          "category" "productivity")
+
+      (dict "name" "codebase-design"               "category" "engineering")
+      (dict "name" "domain-modeling"               "category" "engineering")
       (dict "name" "grill-with-docs"               "category" "engineering")
       (dict "name" "improve-codebase-architecture" "category" "engineering")
+      (dict "name" "prototype"                     "category" "engineering")
       (dict "name" "tdd"                           "category" "engineering")
 -}}
 {{ range $mpSkills }}
