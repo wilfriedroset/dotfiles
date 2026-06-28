@@ -183,3 +183,16 @@
 # Skills from other repos: add explicit blocks here. They will not share
 # the mattpocock layout, so set url/include/stripComponents to match that
 # repo's tarball (one block per skill, same shape as the externals above).
+
+# cloudflare/security-audit-skill: SKILL.md and its supporting files sit at
+# the tarball root, so stripComponents = 1 lands them directly under the
+# target. Pinned by commit SHA — upstream cuts no tags, and archive-by-SHA
+# makes zero GitHub API calls (same reasoning as the binaries above). Dir
+# matches the in-skill name "security-audit"; bump the SHA to update.
+{{- $sasRev := "4de1ac80123057dd73c586cd3862a6c85a2b8a5e" }}
+[".claude/skills/security-audit"]
+    type = "archive"
+    url = {{ printf "https://github.com/cloudflare/security-audit-skill/archive/%s.tar.gz" $sasRev | quote }}
+    stripComponents = 1
+    exact = true
+    refreshPeriod = "168h"
