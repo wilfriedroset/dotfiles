@@ -22,4 +22,9 @@ if [ ! -x "${installer}" ]; then
 fi
 
 echo "Installing tmux plugins via TPM" >&2
+# On a fresh box no tmux server has sourced ~/.tmux.conf yet, so TPM's
+# TMUX_PLUGIN_MANAGER_PATH global is unset and install_plugins aborts with
+# "FATAL: ... not configured in tmux.conf". Seed it in the environment: the
+# server that install_plugins starts inherits it into its global env.
+export TMUX_PLUGIN_MANAGER_PATH="${HOME}/.tmux/plugins/"
 "${installer}"

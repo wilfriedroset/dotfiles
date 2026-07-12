@@ -36,15 +36,21 @@
 {{- $arch := "x86_64" -}}
 {{- if eq .chezmoi.arch "arm64" -}}{{- $arch = "aarch64" -}}{{- end -}}
 
-# Rust target. Linux x86_64 release artifacts are musl; arm64 is gnu-only.
+# Rust release targets. Prefer musl (statically linked, portable across
+# distros) and fall back to gnu only where a project ships no musl build for
+# the arch. As of the pinned versions, starship/fd/bat publish musl for both
+# x86_64 and aarch64, but ripgrep has no aarch64 musl asset (gnu only) — so it
+# gets its own target.
 {{- $rustTarget := "" -}}
+{{- $ripgrepTarget := "" -}}
 {{- if eq .chezmoi.os "darwin" -}}
 {{-   $rustTarget = printf "%s-apple-darwin" $arch -}}
+{{-   $ripgrepTarget = $rustTarget -}}
 {{- else if eq .chezmoi.os "linux" -}}
-{{-   if eq .chezmoi.arch "amd64" -}}
-{{-     $rustTarget = "x86_64-unknown-linux-musl" -}}
-{{-   else -}}
-{{-     $rustTarget = "aarch64-unknown-linux-gnu" -}}
+{{-   $rustTarget = printf "%s-unknown-linux-musl" $arch -}}
+{{-   $ripgrepTarget = $rustTarget -}}
+{{-   if eq $arch "aarch64" -}}
+{{-     $ripgrepTarget = printf "%s-unknown-linux-gnu" $arch -}}
 {{-   end -}}
 {{- end -}}
 
@@ -85,8 +91,8 @@
 
 # ripgrep — versioned dir; build its name from the pinned version so
 # archive-file can point at the binary inside without globbing.
-{{ if $rustTarget -}}
-{{- $rgDir := printf "ripgrep-%s-%s" $ripgrepVersion $rustTarget }}
+{{ if $ripgrepTarget -}}
+{{- $rgDir := printf "ripgrep-%s-%s" $ripgrepVersion $ripgrepTarget }}
 [".local/bin/rg"]
     type = "archive-file"
     url = {{ printf "https://github.com/BurntSushi/ripgrep/releases/download/%s/%s.tar.gz" $ripgrepVersion $rgDir | quote }}
