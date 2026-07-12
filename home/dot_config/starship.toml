@@ -11,7 +11,7 @@ $git_branch\
 $git_state\
 $git_status\
 $cmd_duration\
-$python\
+${env_var.VIRTUAL_ENV_PROMPT}\
 $character"""
 
 [hostname]
@@ -57,8 +57,11 @@ style = "bright-black"
 format = "[$duration]($style) "
 style = "yellow"
 
-[python]
-format = "[$virtualenv]($style) "
+[env_var.VIRTUAL_ENV_PROMPT]
+# Replaces the built-in $python module, which scans every file in the CWD
+# on each prompt to decide whether to render — that scan blows past the
+# 30ms scan_timeout on slow/large remote $HOME dirs ("Scanning current
+# directory timed out"). venv already exports VIRTUAL_ENV_PROMPT (e.g.
+# "(myenv) "), so reading it costs nothing and renders identically.
+format = "[$env_value]($style)"
 style = "bright-black"
-detect_extensions = []
-detect_files = []
