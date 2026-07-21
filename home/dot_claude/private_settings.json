@@ -11,5 +11,7 @@
       }
     }
   },
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "theme": "dark"
 }
