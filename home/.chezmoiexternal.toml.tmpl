@@ -213,3 +213,16 @@
     stripComponents = 1
     exact = true
     refreshPeriod = "168h"
+
+# temporalio/skill-temporal-developer: SKILL.md and its supporting files sit
+# at the tarball root, so stripComponents = 1 lands them directly under the
+# target. Pinned by commit SHA — upstream cuts no tags, and archive-by-SHA
+# makes zero GitHub API calls. Dir matches the in-skill name
+# "temporal-developer"; bump the SHA to update.
+{{- $tdRev := "4f7b14626c56d06574564cd4d265bbcb6425a21c" }}
+[".claude/skills/temporal-developer"]
+    type = "archive"
+    url = {{ printf "https://github.com/temporalio/skill-temporal-developer/archive/%s.tar.gz" $tdRev | quote }}
+    stripComponents = 1
+    exact = true
+    refreshPeriod = "168h"
