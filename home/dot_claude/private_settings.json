@@ -35,5 +35,21 @@
   },
   "effortLevel": "high",
   "tui": "fullscreen",
-  "theme": "dark"
+  "theme": "dark",
+  "outputStyle": "simple-english",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf 'SIMPLE ENGLISH SKILL ACTIVE AUTOMATICALLY\\n\\nFollow these writing rules without waiting for the user to name the skill. The full skill, with the rule catalog and the check mode, is at ~/.claude/skills/simple-english/SKILL.md. Read it for a compliance check or for strict mode.\\n\\n'; cat ~/.claude/hooks/simple-english-system-prompt.md",
+            "timeout": 5,
+            "statusMessage": "Loading Simple English..."
+          }
+        ]
+      }
+    ]
+  }
 }

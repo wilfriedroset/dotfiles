@@ -226,3 +226,37 @@
     stripComponents = 1
     exact = true
     refreshPeriod = "168h"
+
+# AminBlg/SimpleEnglish: multi-purpose repo (plugin, hooks, evals); only the
+# skill is wanted, at skills/simple-english/, so include narrows to it and
+# stripComponents = 3 drops root/skills/simple-english. Pinned to a release tag;
+# the archive URL makes zero GitHub API calls, so fresh VMs dodge the rate limit.
+# The version is stored bare because the tag carries a leading v but the tarball
+# root does not: tag v2.0.0 unpacks to SimpleEnglish-2.0.0.
+{{- $seVer := "2.0.0" }}
+[".claude/skills/simple-english"]
+    type = "archive"
+    url = {{ printf "https://github.com/AminBlg/SimpleEnglish/archive/refs/tags/v%s.tar.gz" $seVer | quote }}
+    include = ["**/skills/simple-english/**"]
+    stripComponents = 3
+    exact = true
+    refreshPeriod = "168h"
+
+# Same tarball, two more files served from the same cached download: the
+# condensed rule set that the SessionStart hook cats (see dot_claude/
+# private_settings.json), and the output style, which Claude Code only picks
+# up from ~/.claude/output-styles/. The upstream plugin runs a Node wrapper
+# around the prompt file; a `cat` in the hook does the same job with no
+# runtime dependency, so only the file is vendored.
+{{- $seRoot := printf "SimpleEnglish-%s" $seVer }}
+[".claude/hooks/simple-english-system-prompt.md"]
+    type = "archive-file"
+    url = {{ printf "https://github.com/AminBlg/SimpleEnglish/archive/refs/tags/v%s.tar.gz" $seVer | quote }}
+    path = "{{ $seRoot }}/prompts/system-prompt.md"
+    refreshPeriod = "168h"
+
+[".claude/output-styles/simple-english.md"]
+    type = "archive-file"
+    url = {{ printf "https://github.com/AminBlg/SimpleEnglish/archive/refs/tags/v%s.tar.gz" $seVer | quote }}
+    path = "{{ $seRoot }}/output-styles/simple-english.md"
+    refreshPeriod = "168h"
