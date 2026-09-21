@@ -63,7 +63,7 @@
 {{- $fzfVersion       := "v0.72.0" -}}
 {{- $kindVersion      := "v0.31.0" -}}
 {{- $k9sVersion       := "v0.50.18" -}}
-{{- $mpSkillsRev      := "d574778f94cf620fcc8ce741584093bc650a61d3" -}}
+{{- $mpSkillsRev      := "c55ee46073ed923f86ce59a5eb3b6d895095d1b7" -}}
 
 # nvim — full distribution (binary needs lib/ + share/ siblings, lives
 # in ~/.local/opt/nvim and is added to PATH by dot_shell.env).
@@ -167,32 +167,51 @@
 # mattpocock/skills: pinned by commit SHA ($mpSkillsRev above) — upstream
 # cuts no tags. Layout is skills-<sha>/skills/<category>/<name>/, so
 # stripComponents = 4 drops those levels and the skill's files land
-# directly under the target. The list below loops to one external each;
-# add a skill by appending {name, category}, bump $mpSkillsRev to update.
+# directly under the target. The include glob wildcards the category
+# rather than naming it: upstream moves skills between categories (and out
+# of in-progress/) without renaming them, and a glob that matches nothing
+# yields an empty directory with no error, so a hardcoded category breaks
+# silently on the next bump. No skill name is duplicated across categories
+# upstream, so the wildcard stays unambiguous. Add a skill by appending its
+# name below; bump $mpSkillsRev to update.
+#
+# Deliberately excluded: ask-matt (router; its flow names skills not
+# installed here), setup-matt-pocock-skills (writes docs/agents/
+# issue-tracker.md, hand-maintained instead — see dot_claude/templates/
+# issue-tracker-jira.md), and everything under misc/, in-progress/,
+# deprecated/.
 {{- $mpUrl := printf "https://github.com/mattpocock/skills/archive/%s.tar.gz" $mpSkillsRev -}}
 {{- $mpSkills := list
 
-      (dict "name" "grill-me"                      "category" "productivity")
-      (dict "name" "grilling"                      "category" "productivity")
-      (dict "name" "handoff"                       "category" "productivity")
-      (dict "name" "writing-great-skills"          "category" "productivity")
+      "grill-me"
+      "grilling"
+      "handoff"
+      "teach"
+      "to-questionnaire"
+      "wait-what"
+      "writing-for-agents"
 
-      (dict "name" "code-review"                   "category" "engineering")
-      (dict "name" "codebase-design"               "category" "engineering")
-      (dict "name" "diagnosing-bugs"               "category" "engineering")
-      (dict "name" "domain-modeling"               "category" "engineering")
-      (dict "name" "grill-with-docs"               "category" "engineering")
-      (dict "name" "implement"                     "category" "engineering")
-      (dict "name" "improve-codebase-architecture" "category" "engineering")
-      (dict "name" "prototype"                     "category" "engineering")
-      (dict "name" "research"                      "category" "engineering")
-      (dict "name" "tdd"                           "category" "engineering")
+      "code-review"
+      "codebase-design"
+      "diagnosing-bugs"
+      "domain-modeling"
+      "grill-with-docs"
+      "implement"
+      "improve-codebase-architecture"
+      "prototype"
+      "research"
+      "resolving-merge-conflicts"
+      "tdd"
+      "to-spec"
+      "to-tickets"
+      "triage"
+      "wayfinder"
 -}}
 {{ range $mpSkills }}
-[".claude/skills/{{ .name }}"]
+[".claude/skills/{{ . }}"]
     type = "archive"
     url = {{ $mpUrl | quote }}
-    include = ["{{ printf "**/skills/%s/%s/**" .category .name }}"]
+    include = ["{{ printf "**/skills/*/%s/**" . }}"]
     stripComponents = 4
     exact = true
     refreshPeriod = "168h"
