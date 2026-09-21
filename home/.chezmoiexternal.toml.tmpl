@@ -227,6 +227,20 @@
     exact = true
     refreshPeriod = "168h"
 
+# cursor/plugins: monorepo of plugins; only one skill is wanted, at
+# pstack/skills/unslop/, so include narrows to it and stripComponents = 4 drops
+# root/pstack/skills/unslop. Pinned by commit SHA — upstream cuts no tags, and
+# archive-by-SHA makes zero GitHub API calls. The skill sets
+# disable-model-invocation, so it never loads on its own: call /unslop to use it.
+{{- $unslopRev := "e8d856f0273b42ebafe0ec3546bd645709e7c1b0" }}
+[".claude/skills/unslop"]
+    type = "archive"
+    url = {{ printf "https://github.com/cursor/plugins/archive/%s.tar.gz" $unslopRev | quote }}
+    include = ["**/pstack/skills/unslop/**"]
+    stripComponents = 4
+    exact = true
+    refreshPeriod = "168h"
+
 # AminBlg/SimpleEnglish: multi-purpose repo (plugin, hooks, evals); only the
 # skill is wanted, at skills/simple-english/, so include narrows to it and
 # stripComponents = 3 drops root/skills/simple-english. Pinned to a release tag;
