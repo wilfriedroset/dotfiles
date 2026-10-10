@@ -24,7 +24,8 @@
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "ponytail@ponytail": true,
-    "mattpocock-skills@mattpocock": true
+    "mattpocock-skills@mattpocock": true,
+    "temporal@temporal-marketplace": true
   },
   "extraKnownMarketplaces": {
     "ponytail": {
@@ -37,6 +38,13 @@
       "source": {
         "source": "github",
         "repo": "mattpocock/skills"
+      },
+      "autoUpdate": true
+    },
+    "temporal-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "temporalio/claude-temporal-plugin"
       },
       "autoUpdate": true
     }
