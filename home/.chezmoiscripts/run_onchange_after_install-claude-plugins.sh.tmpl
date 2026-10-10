@@ -1,0 +1,34 @@
+#!/bin/sh
+# Install the plugins that ~/.claude/settings.json declares, during apply.
+# Claude Code installs them by itself, but only in the background after a
+# session starts, so the first session on a new machine runs without them.
+#
+# run_onchange: the rendered body lists every marketplace and plugin from
+# dot_claude/private_settings.json, so a change to either re-runs it. The
+# line below also re-runs it once claude is installed after a skipped run.
+# claude installed: {{ ne (lookPath "claude") "" }}
+{{- $settings := include "dot_claude/private_settings.json" | fromJson }}
+{{- if not (lookPath "node") }}
+{{-   warnf "node not found: the simple-english SessionStart hook cannot load its rules" }}
+{{- end }}
+{{- if not (lookPath "python3") }}
+{{-   warnf "python3 not found: the simple-english lint hooks will fail" }}
+{{- end }}
+
+set -eu
+
+if ! command -v claude >/dev/null 2>&1; then
+    echo "claude not installed; skipping plugin install" >&2
+    exit 0
+fi
+
+# Every marketplace and plugin is already declared in settings.json, so these
+# commands do not write it. A new declaration would drift it from chezmoi.
+{{- range $name, $marketplace := $settings.extraKnownMarketplaces }}
+claude plugin marketplace add {{ $marketplace.source.repo | quote }}
+{{- end }}
+{{- range $plugin, $enabled := $settings.enabledPlugins }}
+{{-   if $enabled }}
+claude plugin install {{ $plugin | quote }}
+{{-   end }}
+{{- end }}

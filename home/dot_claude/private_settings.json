@@ -55,6 +55,12 @@
         "repo": "AminBlg/SimpleEnglish"
       },
       "autoUpdate": true
+    },
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
     }
   },
   "effortLevel": "high",
