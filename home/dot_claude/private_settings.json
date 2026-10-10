@@ -23,7 +23,8 @@
   "disableArtifact": true,
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
-    "ponytail@ponytail": true
+    "ponytail@ponytail": true,
+    "mattpocock-skills@mattpocock": true
   },
   "extraKnownMarketplaces": {
     "ponytail": {
@@ -31,6 +32,13 @@
         "source": "github",
         "repo": "DietrichGebert/ponytail"
       }
+    },
+    "mattpocock": {
+      "source": {
+        "source": "github",
+        "repo": "mattpocock/skills"
+      },
+      "autoUpdate": true
     }
   },
   "effortLevel": "high",
