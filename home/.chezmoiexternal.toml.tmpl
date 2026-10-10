@@ -161,16 +161,18 @@
 # Skills that ship as a Claude Code plugin are not vendored here: they come
 # from enabledPlugins in dot_claude/private_settings.json.
 
-# cloudflare/security-audit-skill: SKILL.md and its supporting files sit at
-# the tarball root, so stripComponents = 1 lands them directly under the
-# target. Pinned by commit SHA — upstream cuts no tags, and archive-by-SHA
-# makes zero GitHub API calls (same reasoning as the binaries above). Dir
-# matches the in-skill name "security-audit"; bump the SHA to update.
+# cloudflare/security-audit-skill: the skill sits at skills/security-audit/,
+# so include narrows to it and stripComponents = 3 drops
+# root/skills/security-audit. Pinned by commit SHA — upstream cuts no tags,
+# and archive-by-SHA makes zero GitHub API calls (same reasoning as the
+# binaries above). Dir matches the in-skill name "security-audit"; bump the
+# SHA to update.
 {{- $sasRev := "8bac42001ddd90a4dcd8d5a5045199283a8eba75" }}
 [".claude/skills/security-audit"]
     type = "archive"
     url = {{ printf "https://github.com/cloudflare/security-audit-skill/archive/%s.tar.gz" $sasRev | quote }}
-    stripComponents = 1
+    include = ["**/skills/security-audit/**"]
+    stripComponents = 3
     exact = true
 
 # cursor/plugins: monorepo of plugins; only one skill is wanted, at
