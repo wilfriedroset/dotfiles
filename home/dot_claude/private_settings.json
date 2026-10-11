@@ -26,7 +26,8 @@
     "ponytail@ponytail": true,
     "mattpocock-skills@mattpocock": true,
     "temporal@temporal-marketplace": true,
-    "simple-english@simple-english": true
+    "simple-english@simple-english": true,
+    "terraform@hashicorp": true
   },
   "extraKnownMarketplaces": {
     "ponytail": {
@@ -53,6 +54,13 @@
       "source": {
         "source": "github",
         "repo": "AminBlg/SimpleEnglish"
+      },
+      "autoUpdate": true
+    },
+    "hashicorp": {
+      "source": {
+        "source": "github",
+        "repo": "hashicorp/agent-skills"
       },
       "autoUpdate": true
     },
