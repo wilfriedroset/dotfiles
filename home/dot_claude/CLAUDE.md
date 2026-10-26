@@ -1,12 +1,12 @@
 # CLAUDE.md
 
-You are Claude Code working on infrastructure and backend systems. Per-stack rules (Go, Terraform/OpenTofu, Puppet, Ansible) live in dedicated skills that load on demand. Read the relevant skill before writing code or running commands in that stack.
+You work on infrastructure and backend systems. If a stack (Go, Terraform/OpenTofu, Puppet, Ansible) has a skill, read it before you write code or run commands in that stack.
 
 ---
 
 ## Ask before
 
-Stop and confirm before any of these. Read-only inspection is fine; state-changing actions are not.
+Stop and confirm before any state-changing action below. Read-only inspection needs no confirmation.
 
 - `terraform apply` / `tofu apply` in any environment, including dev
 - `terraform destroy`, `state rm`, `state mv`, or `import`
@@ -15,74 +15,52 @@ Stop and confirm before any of these. Read-only inspection is fine; state-changi
 - Modifying CI/CD config
 - Generating, rotating, or committing any credential, key, or cert
 - `rm -rf` outside the current repo working tree
-- Adding a new third-party dependency — justify in the commit body
+- Adding a new third-party dependency, with the reason in the commit body
 - Anything touching prod inventory, prod state, or prod accounts
 
 If unclear which env a command targets, ask.
 
 ---
+
 ## Orchestration
 
-### Subagents to preserve context
+The main agent plans, integrates results, and talks to the user. Subagents do work whose middle is noise to the main thread: file dumps, test logs, search results.
 
-The main agent orchestrates and holds the user-facing thread. Subagents do work that would otherwise bloat the main context with intermediate output (file dumps, test logs, search results, scratch reasoning). Spawn a subagent when the work has a well-defined input and output and the middle is noise to the main thread.
+For a change across several files or with a long test/fix cycle:
+- Implementer subagent: writes the code from a clear spec, returns a diff summary.
+- Reviewer subagent: reads the diff against the spec and the repo's conventions, returns a list of issues.
 
-Default split for non-trivial changes:
-- **Main agent**: planning, decomposition, integrating results, talking to the user
-- **Implementer subagent**: writes the code given a clear spec; returns a diff summary, not the full file dumps
-- **Reviewer subagent**: reads the diff against the spec and the repo's conventions; returns a list of issues, not a re-narration of the code
+For a small change, write it in the main thread and spawn only the reviewer.
 
-The reviewer must be a separate subagent from the implementer. Same-context review tends to ratify what was just written; fresh context catches what familiarity hides.
+The reviewer is always a fresh subagent, separate from the implementer. Same-context review ratifies what was just written.
 
-Parallelize with Task when work is independent:
-- Reading independent files across a large repo
-- Searching multiple repos for the same pattern
-- Running independent test suites
-- Gathering context from unrelated subsystems before a plan
+### Converge with `/loop`
 
-Sequential tool calls are fine for dependent work. Don't fan out to look busy.
-
-### `/loop` to convergence
-
-For tasks with an objective pass/fail signal (tests, lint, type-check, plan-clean), use `/loop` to drive cycles until both:
-1. The objective signal is green, AND
-2. The reviewer subagent returns no blocking issues
+For tasks with an objective pass/fail signal (tests, lint, compile, clean plan), use `/loop`. If the signal is green AND the reviewer returns no blockers, the loop exits.
 
 Each iteration:
-1. **Implementer** makes a change toward the goal
-2. **Signal check** runs the objective command (test/lint/plan/etc.)
-3. **Reviewer** (fresh context, not the implementer) reads the diff against the spec and the repo's conventions, returns a structured list: blocking issues, suggestions, nits
-4. If signal is red OR reviewer returns blocking issues → next iteration, feeding both back to the implementer
-5. If signal is green AND reviewer has no blockers → exit
+1. Implementer makes a change toward the goal, fed by the previous signal output and blockers.
+2. Run the signal command.
+3. Reviewer (fresh context) classifies issues:
+   - Blocking: correctness, security, violates this file or the relevant skill, breaks an interface contract, regression risk the tests miss.
+   - Suggestion: real improvement, not required to ship.
+   - Nit: style preference.
 
-The reviewer is inside the loop, not after it. A green test suite with garbage code still iterates. A clean review with red tests still iterates.
+Only blockers gate the exit. Report suggestions and nits to the user at the end, without iterating on them.
 
-Blocking vs non-blocking is the reviewer's call, but the categories are fixed:
-- **Blocking**: correctness, security, violates a rule in this file or the relevant skill, breaks an interface contract, introduces a regression risk the tests don't cover
-- **Suggestion**: real improvement, not required to ship
-- **Nit**: style preference, ignorable
+Cap at 5 iterations. If the loop does not converge, stop and report what is stuck: usually a wrong spec, a signal that tests the wrong thing, or an implementer/reviewer disagreement that needs a human call.
 
-Only blockers gate the exit. Suggestions and nits get surfaced to the user at the end as a summary, not iterated on.
-
-Cap iterations (default: 5). If the loop hasn't converged, stop and surface what's stuck — usually the spec is wrong, the signal is testing the wrong thing, or the reviewer and implementer disagree on something that needs a human call.
-
-Good `/loop` targets:
-- Failing test suite → all green AND review-clean
-- Lint or vet errors → zero AND review-clean
-- Terraform plan with unexpected changes → plan matches intent AND review-clean
-- Type errors → clean compile AND review-clean
-
-Bad `/loop` targets: anything where "done" is subjective at the spec level (style, naming, architecture). The reviewer can enforce specifics inside a loop, but it can't decide what the loop is for. Those need a human, not an automated cycle.
+Keep `/loop` for objective goals. Subjective goals (style, naming, architecture) go to the user.
 
 ---
 
 ## Git
 
-- Conventional commits, explaining *why* not *what*: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`.
-- Small, focused, atomic, tested. Each commit must be `git bisect`-safe.
-- Always on a dedicated branch.
-- Pre-commit hook should reject strings matching common secret patterns (`AKIA*`, `ghp_*`, `eyJ*`, `-----BEGIN`). If missing, offer to install it with `prek install`
-- When closing a TODO item, update and commit the TODO file alongside the code change.
+- Conventional commits. The body explains why.
+- Atomic commits: each one is tested and `git bisect`-safe.
+- Work on a dedicated branch.
+- The pre-commit hook rejects common secret patterns (`AKIA*`, `ghp_*`, `eyJ*`, `-----BEGIN`). If it is missing, offer to install it with `prek install`.
+- When a change closes a TODO item, update the TODO file in the same commit.
 
 ---
 
@@ -95,55 +73,41 @@ Bad `/loop` targets: anything where "done" is subjective at the spec level (styl
 
 ## Comments
 
-Default to no comment. Code should be self-explanatory through naming and structure.
+A comment answers why, never what. Default to none. Make the code explain itself through naming and structure.
 
-**Only write a comment when it answers *why*, never *what*.** If the comment restates what the code does, delete it and improve the code instead.
+Write a comment for:
+- A non-obvious why: business rule, spec reference, workaround for an external bug, performance trade-off, intentional deviation from the obvious approach.
+- A non-local consequence ("called by X under Y condition").
+- A link to an issue, RFC, or external doc.
 
-**Forbidden:**
-- Restating the code in English (`// increment counter` above `counter++`)
-- Section banners (`// --- HELPERS ---`)
-- Narrating obvious control flow (`// loop through users`)
-- TODOs without a ticket reference or owner
-- Docstrings that just list parameters already visible in the signature
-- Preamble explaining what you're about to do
-- Marking what changed in this edit (`// updated to handle null`) — that's what the diff is for
-
-**Acceptable, when truly needed:**
-- Non-obvious *why*: business rule, spec reference, workaround for an external bug, performance trade-off, intentional deviation from the obvious approach
-- Warnings about non-local consequences ("called by X under Y condition")
-- Links to issues, RFCs, or external docs
-
-**Style:** one line is the target. If the explanation needs more lines than the code, refactor instead. Re-read nearby comments when editing; delete or update any that no longer match.
+One line is the target. If the why needs more lines than the code, refactor. TODOs carry a ticket reference or owner. The diff records what changed, so comments describe the code as it is. When editing, update or delete nearby comments that no longer match.
 
 ---
 
 ## Code style
 
-- No emojis in code, comments, or documentation.
-- Documentation under `./docs/` at repo root; nested layout is fine.
-- Structured logs everywhere (golang `log/slog`).
+- Plain ASCII in code, comments, and docs: no emojis.
+- Docs live under `./docs/` at repo root. Nested layout is fine.
+- Structured logs everywhere (Go: `log/slog`).
 
 ---
 
 ## Privacy
 
-- Never paste secrets in logs, commits, or chat: API keys, tokens, passwords, JWTs, cloud creds, SSH keys.
-- Review tool output before quoting it back; redact anything sensitive.
-- If a secret was committed, surface it immediately and propose rotation — don't quietly rewrite history.
+Secrets (API keys, tokens, passwords, JWTs, cloud creds, SSH keys) stay out of logs, commits, and chat. Redact tool output before you quote it. If a secret was committed, report it at once and propose rotation. Leave history as is until the user decides.
 
 ---
 
 ## Workflow
 
-- `make -C <DIR> <target>` (capital C) instead of `cd <DIR> && make <target>`.
-- When a `make` target exists for a task, use it; don't reinvent the underlying command.
+- `make -C <DIR> <target>` instead of `cd <DIR> && make <target>`.
+- When a `make` target exists for a task, use it.
 
 ---
 
 ## Communication
 
-- Drop filler: *just*, *really*, *basically*, *actually*, *simply*.
-- Drop pleasantries: *sure*, *certainly*, *of course*, *happy to*.
+- Terse, direct sentences that start with the content.
 - Prefer short synonyms: *big* not *extensive*, *fix* not *implement a solution for*.
 - Abbreviate common terms: DB, auth, config, req, res, fn, impl.
 - Technical terms stay exact. Code blocks unchanged. Errors quoted exact.
