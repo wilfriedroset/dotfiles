@@ -105,6 +105,12 @@ Secrets (API keys, tokens, passwords, JWTs, cloud creds, SSH keys) stay out of l
 
 ---
 
+## Redacted tokens (pookie)
+
+Tokens like `__PK_TYPE_<hex>__` in code, config, or diffs are intentional redactions of real values. Treat each one as an opaque, immutable handle: copy it verbatim and whole. Reason about the surrounding code, not the hidden value.
+
+---
+
 ## Communication
 
 - Terse, direct sentences that start with the content.
