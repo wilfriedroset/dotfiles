@@ -70,6 +70,10 @@ kubectl() {
 # `command -v` guards against first-boot ordering before the external runs.
 command -v starship >/dev/null && eval "$(starship init zsh)"
 
+# A remote app that dies with SSH never turns off mouse tracking or extended keys (Ctrl breaks).
+_reset_term_modes() { printf '\e[?1000l\e[?1002l\e[?1003l\e[?1006l\e[?1004l\e[>4m\e[<u' }
+precmd_functions+=(_reset_term_modes)
+
 # --- History -------------------------------------------------------------
 HISTFILE="${HOME}/.zsh_history"
 HISTSIZE=10000
