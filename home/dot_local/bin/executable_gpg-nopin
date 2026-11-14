@@ -1,0 +1,5 @@
+#!/bin/sh
+# Sign without a passphrase prompt. Claude Code uses this as gpg.program (env in
+# ~/.claude/settings.json), so a locked key fails fast instead of opening
+# pinentry-curses on its terminal.
+exec gpg2 --pinentry-mode error "$@"
