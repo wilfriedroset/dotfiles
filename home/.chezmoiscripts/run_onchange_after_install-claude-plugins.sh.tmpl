@@ -4,10 +4,10 @@
 # session starts, so the first session on a new machine runs without them.
 #
 # run_onchange: the rendered body lists every marketplace and plugin from
-# dot_claude/private_settings.json, so a change to either re-runs it. The
-# line below also re-runs it once claude is installed after a skipped run.
+# dot_claude/private_settings.json.tmpl, so a change to either re-runs it.
+# The line below also re-runs it once claude is installed after a skipped run.
 # claude installed: {{ ne (lookPath "claude") "" }}
-{{- $settings := include "dot_claude/private_settings.json" | fromJson }}
+{{- $settings := includeTemplate "dot_claude/private_settings.json.tmpl" . | fromJson }}
 {{- if not (lookPath "node") }}
 {{-   warnf "node not found: the simple-english SessionStart hook cannot load its rules" }}
 {{- end }}
