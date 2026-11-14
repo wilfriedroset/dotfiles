@@ -80,9 +80,11 @@
 [credential]
     helper = cache --timeout=3600
 
+[gpg]
+    program = gpg2
+
 [include]
     # This is where you store your [user] specific config or other parameters if
-    # you want to overwrite the default one
+    # you want to overwrite the default one. Keep it last: for single-valued
+    # keys, the last value wins.
     path = ~/.gitconfig.local
-[gpg]
-	program = gpg2
